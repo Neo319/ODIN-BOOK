@@ -10,9 +10,7 @@ const router = require("./routes/indexRouter.js");
 //parsing json payloads
 app.use(express.json());
 
-app.use("/", (req, res) => {
-  res.send("Welcome to the app. (WIP)");
-});
+app.use("/", router);
 
 app.listen(port, () => {
   console.log("app listening on port: ", port);

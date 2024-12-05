@@ -1,5 +1,6 @@
-const index = require("../routes/index");
-const approutes = require("../routes/approutes");
+require("dotenv").config();
+const index = require("../routes/indexRouter.js");
+const { execSync } = require("child_process");
 
 const express = require("express");
 const app = express();
@@ -7,7 +8,7 @@ const app = express();
 //parsing json payloads
 app.use(express.json());
 
-//SET UP DB for test environments.
+// SET UP DB for test environments.
 const prisma = (() => {
   const { PrismaClient } = require("@prisma/client");
   const databaseUrl = process.env.TEST_DATABASE_URL;
@@ -24,9 +25,7 @@ beforeAll(async () => {
   console.log("Setting up test database...");
 
   // Reset the database schema
-  execSync("npx prisma migrate reset --force --skip-generate", {
-    stdio: "inherit",
-  });
+  execSync("npx prisma migrate reset --force --skip-generate");
 
   // Optionally seed the database with a user table and data
   await prisma.user.create({
@@ -46,7 +45,6 @@ afterAll(async () => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use("/", index);
-app.use("/app", approutes);
 
 test("database exists", async () => {
   const user = await prisma.user.findFirstOrThrow();
