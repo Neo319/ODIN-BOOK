@@ -4,7 +4,7 @@ const indexController = require("../controllers/indexController");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("Welcome to project Odin-Book (WIP)");
+  res.json({ message: "Welcome to project Odin-Book (WIP)" });
 });
 
 router.get("test1", indexController.test1);

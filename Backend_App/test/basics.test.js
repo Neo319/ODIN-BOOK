@@ -1,6 +1,7 @@
 require("dotenv").config();
 const index = require("../routes/indexRouter.js");
 const { execSync } = require("child_process");
+const request = require("supertest");
 
 const express = require("express");
 const app = express();
@@ -46,9 +47,21 @@ afterAll(async () => {
 app.use(express.urlencoded({ extended: false }));
 app.use("/", index);
 
+// ----- TESTS BEGIN HERE -----
+const databaseUrl = process.env.TEST_DATABASE_URL;
+
 test("database exists", async () => {
   const user = await prisma.user.findFirstOrThrow();
 
   expect(user).not.toBeNull();
   //
+});
+
+test("expected response", async () => {
+  const res = await request(app).get("/");
+
+  console.log("debug: ", res.status);
+
+  expect(res.ok).toBe(true);
+  expect(res.status).toBe(200);
 });

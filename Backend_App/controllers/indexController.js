@@ -26,7 +26,7 @@ const prisma = (() => {
 })();
 
 async function test1(req, res) {
-  return res.send("Hello from controller");
+  return res.json({ message: "Hello from controller" });
 }
 module.exports = {
   test1,
