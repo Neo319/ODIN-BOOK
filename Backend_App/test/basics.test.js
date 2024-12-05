@@ -48,7 +48,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", index);
 
 // ----- TESTS BEGIN HERE -----
-const databaseUrl = process.env.TEST_DATABASE_URL;
 
 test("database exists", async () => {
   const user = await prisma.user.findFirstOrThrow();
@@ -57,11 +56,50 @@ test("database exists", async () => {
   //
 });
 
-test("expected response", async () => {
+test("expected response exists", async () => {
   const res = await request(app).get("/");
-
-  console.log("debug: ", res.status);
 
   expect(res.ok).toBe(true);
   expect(res.status).toBe(200);
+});
+
+// LOGGING IN TESTS
+describe("Login", () => {
+  let token; // Variable to store the token
+
+  beforeAll(async () => {
+    const response = await request(app)
+      .post("/signup")
+      .send({ username: "uniqueTest", password: "asdf" });
+
+    //check response status
+    expect(response.status).toBe(200);
+
+    const loginResponse = await request(app)
+      .post("/login")
+      .send({ username: "uniqueTest", password: "asdf" });
+
+    const jsonData = JSON.parse(loginResponse.text);
+    // TOKEN FOUND HERE
+
+    token = jsonData.token;
+    expect(token).toBeDefined();
+  });
+
+  test("sends token on success", async () => {
+    expect(token).not.toBeNull();
+    expect(token).toBeDefined();
+  });
+  test("logins fail with incorrect data", async () => {
+    const response = await request(app)
+      .post("/login")
+      .send({ username: "incorrect", password: "incorrect" });
+    expect(response.ok).toBeFalsy();
+  });
+  test("cannot login with incorrect password", async () => {
+    const response = await request(app)
+      .post("/login")
+      .send({ username: "uniqueTest", password: "incorrect" });
+    expect(response.ok).toBeFalsy();
+  });
 });
