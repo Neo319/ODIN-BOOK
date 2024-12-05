@@ -5,7 +5,7 @@ const port = process.env.PORT || 2000;
 //starting app
 const app = express();
 
-const router = require("./routes/indexRouter");
+const router = require("./routes/indexRouter.js");
 
 //parsing json payloads
 app.use(express.json());
