@@ -14,13 +14,9 @@ router.post("/signup", indexController.signup_post);
 
 router.get("/user", indexController.user_detail);
 
-//routes related to user manipulation
-
-// temp
-
+// --- routes related to user manipulation ---
 router.get("/searchUsers", usersController.user_search);
 
-//protected: follow another user
 router.post("/follow/:userId", usersController.follow_user);
 
 module.exports = router;
