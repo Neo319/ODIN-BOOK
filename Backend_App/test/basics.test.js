@@ -115,22 +115,56 @@ describe("Login", () => {
 
 // TESTS FOR USER-RELATED ROUTES
 describe("User", () => {
-  // beforeAll create needed tokens & db content
-  // 1. find test1 function...
-  test("usersController found", async () => {
-    const res = await request(app).get("/test1");
+  let token;
+  beforeAll(async () => {
+    const loginResponse = await request(app)
+      .post("/login")
+      .send({ username: "uniqueTest", password: "asdf" });
 
-    expect(res.ok).toBe(true);
+    const jsonData = JSON.parse(loginResponse.text);
+    token = jsonData.token;
+    expect(token).toBeDefined();
   });
 
   test("search users returns usernames, ids", async () => {
     // empty search
-    const res = await request(app).get("/searchUsers?search=search");
-    console.log(res.body);
-    console.log(res.status);
+    const res = await request(app).get("/searchUsers?search=");
     expect(res.body).toBeInstanceOf(Object);
-    expect(res.body.result[1].username).toBe("uniqueTest");
+    expect(res.body.result.length).toBe(2);
   });
 
   // search with params
+  test("can search with specific parameters", async () => {
+    const res = await request(app).get("/searchUsers?search=user");
+    expect(res.body.result.length).toBe(1);
+  });
+
+  test("follow request updates db", async () => {
+    //get id of user to follow
+    const followedUser = await prisma.user.findFirst({
+      where: {
+        username: "test_user",
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    console.log(followedUser);
+
+    // making request
+    const res = await request(app)
+      .post(`/follow/${followedUser.id}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.ok).toBe(true);
+
+    // get own user detail
+    const res2 = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${token}`);
+    expect(res2.ok).toBe(true);
+
+    console.log(res2.body);
+    expect(res2.body.user.following).toBeDefinde;
+  });
 });

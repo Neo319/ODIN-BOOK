@@ -25,14 +25,9 @@ const prisma = (() => {
   });
 })();
 
-async function test1(req, res) {
-  return res.json({ message: "Hello from users controller" });
-}
-
 async function user_search(req, res) {
   try {
-    console.log("here");
-    const query = req.params.search || null;
+    const query = req.query.search || null;
     console.log("debug -- user search query: ", query);
 
     let result;
@@ -65,8 +60,37 @@ async function user_search(req, res) {
   }
 }
 
+//follow user (by id)
+const follow_user = [
+  verify,
+  async function (req, res) {
+    jwt.verify(req.token, SECRET_KEY, (err, authData) => {
+      if (err) {
+        return res.status(401).send({ message: "error during authorization." });
+      } else {
+        console.log(
+          authData.user.id,
+          " attempting to follow ",
+          req.params.userId
+        );
+
+        prisma.user.update({
+          where: {
+            id: authData.user.id,
+          },
+          data: {
+            // following: ?
+          },
+        });
+
+        return res.status(401).send("incomplete");
+      }
+    });
+  },
+];
+
 module.exports = {
-  test1,
   user_search,
+  follow_user,
   //
 };
