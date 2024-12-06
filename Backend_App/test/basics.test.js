@@ -63,7 +63,7 @@ test("expected response exists", async () => {
   expect(res.status).toBe(200);
 });
 
-// LOGGING IN TESTS
+// LOGGING IN, ETC TESTS
 describe("Login", () => {
   let token; // Variable to store the token
 
@@ -108,8 +108,29 @@ describe("Login", () => {
       .get("/user")
       .set("Authorization", `Bearer ${token}`);
 
-    console.log(res.body);
     expect(res.ok).toBe(true);
     expect(res.body.username).toBe("uniqueTest");
   });
+});
+
+// TESTS FOR USER-RELATED ROUTES
+describe("User", () => {
+  // beforeAll create needed tokens & db content
+  // 1. find test1 function...
+  test("usersController found", async () => {
+    const res = await request(app).get("/test1");
+
+    expect(res.ok).toBe(true);
+  });
+
+  test("search users returns usernames, ids", async () => {
+    // empty search
+    const res = await request(app).get("/searchUsers?search=search");
+    console.log(res.body);
+    console.log(res.status);
+    expect(res.body).toBeInstanceOf(Object);
+    expect(res.body.result[1].username).toBe("uniqueTest");
+  });
+
+  // search with params
 });

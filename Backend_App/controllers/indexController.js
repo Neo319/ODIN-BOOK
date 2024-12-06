@@ -1,5 +1,3 @@
-//TODO: implement passport, jwt, bcrypt signups
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
@@ -25,17 +23,11 @@ const prisma = (() => {
   });
 })();
 
-async function test1(req, res) {
-  return res.json({ message: "Hello from controller" });
-}
-
 // SIGN UP & create a user
 async function signup_post(req, res) {
-  console.log(req.body);
   const { username, password } = req.body;
 
   if (!username || !password) {
-    console.log("Error: incomplete credentials");
     return res
       .status(401)
       .send({ message: "Error: missing signup credentials." });
@@ -49,8 +41,6 @@ async function signup_post(req, res) {
       },
     });
   } catch (err) {
-    console.log("signup err");
-    console.error(err.message);
     return res.status(400).send({ message: "error during signup." });
   }
 
@@ -65,7 +55,6 @@ async function login_post(req, res) {
   // getting credentials
   const { username, password } = req.body;
   if (!username || !password) {
-    console.log("error: incomplete request");
     return res.status(400).send({ message: "Error: incomplete request." });
   }
   // Find user
@@ -76,13 +65,11 @@ async function login_post(req, res) {
       },
     });
     if (!user) {
-      console.log("User was not found.");
       return res.status(401).send({ message: "User was not found!" });
     }
     // compare passwords
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
-      console.log("Incorrect password");
       return res.status(401).send({ message: "Incorrect password!" });
     }
 
@@ -97,7 +84,6 @@ async function login_post(req, res) {
       success: true,
     });
   } catch (err) {
-    console.error("error during login", err.message);
     return res.status(403).send({ message: "Error during login." });
   }
 }
@@ -128,7 +114,6 @@ const user_detail = [
 ];
 
 module.exports = {
-  test1,
   signup_post,
   login_post,
   user_detail,
