@@ -102,4 +102,14 @@ describe("Login", () => {
       .send({ username: "uniqueTest", password: "incorrect" });
     expect(response.ok).toBeFalsy();
   });
+
+  test("user detail returns json object", async () => {
+    const res = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${token}`);
+
+    console.log(res.body);
+    expect(res.ok).toBe(true);
+    expect(res.body.username).toBe("uniqueTest");
+  });
 });

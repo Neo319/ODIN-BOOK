@@ -112,6 +112,14 @@ const user_detail = [
       } else {
         const result = {
           username: authData.user.username,
+          id: authData.user.id,
+          bio: authData.user.bio,
+          avatarURL: authData.user.avatarUrl,
+          createdAt: authData.user.createdAt,
+
+          // These two will be implemented at a later time.
+          posts: "wip",
+          comments: "wip",
         };
         return res.json(result);
       }
