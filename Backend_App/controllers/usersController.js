@@ -64,26 +64,39 @@ async function user_search(req, res) {
 const follow_user = [
   verify,
   async function (req, res) {
-    jwt.verify(req.token, SECRET_KEY, (err, authData) => {
+    jwt.verify(req.token, SECRET_KEY, async (err, authData) => {
       if (err) {
         return res.status(401).send({ message: "error during authorization." });
       } else {
-        console.log(
-          authData.user.id,
-          " attempting to follow ",
-          req.params.userId
-        );
+        try {
+          console.log(
+            authData.user.id,
+            " attempting to follow ",
+            req.params.userId
+          );
 
-        prisma.user.update({
-          where: {
-            id: authData.user.id,
-          },
-          data: {
-            // following: ?
-          },
-        });
+          const followedUser = await prisma.user.findUniqueOrThrow({
+            where: {
+              id: req.params.userId,
+            },
+          });
+          console.log("debug: followedUser = ", followedUser);
 
-        return res.status(401).send("incomplete");
+          const updatedFollower = await prisma.user.update({
+            where: {
+              id: authData.user.id,
+            },
+            data: {
+              following: { push: followedUser },
+            },
+          });
+          console.log("debug: updatedFollower = ", updatedFollower);
+
+          return res.status(401).send("incomplete");
+        } catch (err) {
+          console.error("error following user,", err.message);
+          return res.status(500).send(err.message);
+        }
       }
     });
   },

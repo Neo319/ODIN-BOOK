@@ -21,9 +21,8 @@ model user {
   comments comment[]
   // likes
 
-  // follows: many-to-many self-relation
-  following  user[] @relation("Userfollows")
-  followedBy user[] @relation("Userfollows")
+  followingIds  String[]
+  followedByIds String[]
 }
 
 model post {
