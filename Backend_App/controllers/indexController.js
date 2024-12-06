@@ -103,6 +103,9 @@ const user_detail = [
           avatarURL: authData.user.avatarUrl,
           createdAt: authData.user.createdAt,
 
+          followingIds: authData.user.followingIds,
+          followedByIds: authData.user.followedByIds,
+
           // These two will be implemented at a later time.
           posts: "wip",
           comments: "wip",

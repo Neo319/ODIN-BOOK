@@ -74,25 +74,40 @@ const follow_user = [
             " attempting to follow ",
             req.params.userId
           );
+          const userId = req.params.userId;
 
           const followedUser = await prisma.user.findUniqueOrThrow({
             where: {
-              id: req.params.userId,
+              id: userId,
             },
           });
-          console.log("debug: followedUser = ", followedUser);
+          if (!followedUser) {
+            return res.status(400).send("user to follow does not exist.");
+          }
 
-          const updatedFollower = await prisma.user.update({
+          // ---- updating the following user ----
+          await prisma.user.update({
             where: {
               id: authData.user.id,
             },
             data: {
-              following: { push: followedUser },
+              followingIds: { push: userId },
             },
           });
-          console.log("debug: updatedFollower = ", updatedFollower);
+          // ---- updating followed user ----
+          await prisma.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              followedByIds: { push: authData.user.id },
+            },
+          });
 
-          return res.status(401).send("incomplete");
+          return res.json({
+            success: true,
+            message: `User ${authData.username} successfully followed user ${followedUser.id}`,
+          });
         } catch (err) {
           console.error("error following user,", err.message);
           return res.status(500).send(err.message);

@@ -150,21 +150,26 @@ describe("User", () => {
       },
     });
 
-    console.log(followedUser);
-
     // making request
     const res = await request(app)
       .post(`/follow/${followedUser.id}`)
       .set("Authorization", `Bearer ${token}`);
     expect(res.ok).toBe(true);
+    expect(res.body.success).toBe(true);
 
-    // get own user detail
-    const res2 = await request(app)
-      .get("/user")
-      .set("Authorization", `Bearer ${token}`);
-    expect(res2.ok).toBe(true);
+    const followingUser = await prisma.user.findFirst({
+      where: {
+        username: "uniqueTest",
+      },
+    });
+    const updatedFollowedUser = await prisma.user.findFirst({
+      where: {
+        username: "test_user",
+      },
+    });
+    expect(followingUser.followingIds.length).toBe[1];
+    expect(updatedFollowedUser.followedByIds).toBe[1];
 
-    console.log(res2.body);
-    expect(res2.body.user.following).toBeDefinde;
+    expect;
   });
 });
