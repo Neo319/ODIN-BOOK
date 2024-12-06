@@ -8,7 +8,43 @@ datasource db {
 }
 
 model user {
-  id       Int    @id @unique @default(autoincrement())
+  id       String @id @unique @default(uuid())
   username String @unique
   password String
+
+  createdAt DateTime @default(now())
+  bio       String?
+  avatarURL String?
+
+  posts post[]
+
+  comments comment[]
+  // likes
+
+  // followedBy
+  // following
+}
+
+model post {
+  id String @id @unique @default(uuid())
+
+  creatorId String
+  creator   user   @relation(fields: [creatorId], references: [id])
+
+  content   String
+  createdAt DateTime @default(now())
+
+  comments comment[]
+  // likes
+}
+
+model comment {
+  id String @id @unique @default(uuid())
+
+  creatorId String
+  creator   user   @relation(fields: [creatorId], references: [id])
+
+  // note: this is one-to-many
+  postId String
+  post   post   @relation(fields: [postId], references: [id])
 }
