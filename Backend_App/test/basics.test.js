@@ -28,13 +28,9 @@ beforeAll(async () => {
   // Reset the database schema
   execSync("npx prisma migrate reset --force --skip-generate");
 
-  // Optionally seed the database with a user table and data
-  await prisma.user.create({
-    data: {
-      username: "test_user",
-      password: "securepassword", // Ideally hashed
-    },
-  });
+  const newUser = await request(app)
+    .post("/signup")
+    .send({ username: "test_user", password: "securepassword" });
 
   console.log("Test database setup complete.");
 });
@@ -169,7 +165,19 @@ describe("User", () => {
     });
     expect(followingUser.followingIds.length).toBe[1];
     expect(updatedFollowedUser.followedByIds).toBe[1];
+  });
 
-    expect;
+  test("can see follows from user detail", async () => {
+    const res1 = await request(app)
+      .post("/login")
+      .send({ username: "test_user", password: "securepassword" });
+    const testToken = res1.body.token;
+
+    const res = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${testToken}`);
+    console.log(res.body);
+
+    expect(res.body.followedByIds.length).toBe(1);
   });
 });

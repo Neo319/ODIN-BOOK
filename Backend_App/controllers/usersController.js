@@ -85,6 +85,20 @@ const follow_user = [
             return res.status(400).send("user to follow does not exist.");
           }
 
+          // other important checks:
+          if (authData.user.followingIds.includes(userId)) {
+            return res.json({
+              success: false,
+              message: "already following this user!",
+            });
+          }
+          if (userId === authData.user.id) {
+            return res.json({
+              success: false,
+              message: "you cannot follow yourself!",
+            });
+          }
+
           // ---- updating the following user ----
           await prisma.user.update({
             where: {
