@@ -69,11 +69,6 @@ const follow_user = [
         return res.status(401).send({ message: "error during authorization." });
       } else {
         try {
-          console.log(
-            authData.user.id,
-            " attempting to follow ",
-            req.params.userId
-          );
           const userId = req.params.userId;
 
           const followedUser = await prisma.user.findUniqueOrThrow({

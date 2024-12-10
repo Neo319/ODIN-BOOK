@@ -33,7 +33,7 @@ beforeAll(async () => {
 
   console.log("Test database setup complete.");
 
-  token = getToken();
+  token = await getToken();
 });
 
 afterAll(async () => {
@@ -56,8 +56,6 @@ const getToken = async () => {
   }
 };
 
-console.log("debug-token=", token);
-
 // ---- TESTS BEGIN HERE ----
 
 describe("Posts", () => {
@@ -71,12 +69,11 @@ describe("Posts", () => {
   test("post route updates db with new post", async () => {
     const res = await request(app)
       .post("/post")
-      .set("Authorization", `bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({ text: "This is the first test post." });
-
-    console.log("debug:res.body=", res.body, res.status);
 
     const posts = await prisma.post.findMany();
     expect(posts.length).toBe(1);
+    expect(posts[0].content).toEqual("This is the first test post.");
   });
 });

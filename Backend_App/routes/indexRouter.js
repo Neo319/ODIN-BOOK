@@ -23,4 +23,6 @@ router.post("/follow/:userId", usersController.follow_user);
 // --- routes related to posts ---
 router.get("/postTest", postsController.test);
 
+router.post("/post", postsController.create_post);
+
 module.exports = router;
