@@ -76,4 +76,14 @@ describe("Posts", () => {
     expect(posts.length).toBe(1);
     expect(posts[0].content).toEqual("This is the first test post.");
   });
+
+  test("user can see own posts in user detail", async () => {
+    const res = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.body.posts.length).toBe(1);
+  });
+
+  // test("user can search for others' posts")
 });

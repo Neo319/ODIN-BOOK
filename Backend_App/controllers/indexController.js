@@ -92,25 +92,37 @@ async function login_post(req, res) {
 const user_detail = [
   verify,
   async function (req, res) {
-    jwt.verify(req.token, SECRET_KEY, (err, authData) => {
+    jwt.verify(req.token, SECRET_KEY, async (err, authData) => {
       if (err) {
         return res.status(401).send({ message: "error during authorization." });
       } else {
-        const result = {
-          username: authData.user.username,
-          id: authData.user.id,
-          bio: authData.user.bio,
-          avatarURL: authData.user.avatarUrl,
-          createdAt: authData.user.createdAt,
+        try {
+          const posts = await prisma.post.findMany({
+            where: {
+              creatorId: authData.user.id,
+            },
+          });
 
-          followingIds: authData.user.followingIds,
-          followedByIds: authData.user.followedByIds,
+          const result = {
+            username: authData.user.username,
+            id: authData.user.id,
+            bio: authData.user.bio,
+            avatarURL: authData.user.avatarUrl,
+            createdAt: authData.user.createdAt,
 
-          // These two will be implemented at a later time.
-          posts: "wip",
-          comments: "wip",
-        };
-        return res.json(result);
+            followingIds: authData.user.followingIds,
+            followedByIds: authData.user.followedByIds,
+
+            // These two will be implemented at a later time.
+            posts: posts,
+            comments: "wip",
+          };
+
+          return res.json(result);
+        } catch (err) {
+          console.error(err.message);
+          return res.status(400).send(err.message);
+        }
       }
     });
   },
