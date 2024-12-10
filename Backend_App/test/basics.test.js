@@ -176,7 +176,6 @@ describe("User", () => {
     const res = await request(app)
       .get("/user")
       .set("Authorization", `Bearer ${testToken}`);
-    console.log(res.body);
 
     expect(res.body.followedByIds.length).toBe(1);
   });
