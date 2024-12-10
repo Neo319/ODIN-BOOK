@@ -60,8 +60,40 @@ const create_post = [
   },
 ];
 
+async function posts_search(req, res) {
+  try {
+    const query = req.query.search || null;
+    console.log("debug -- post search query: ", query);
+
+    let result;
+
+    query !== null
+      ? // search by query
+        (result = await prisma.post.findMany({
+          where: {
+            content: { contains: query },
+          },
+          take: 10,
+        }))
+      : // search with no query
+        (result = await prisma.user.findMany({
+          take: 10,
+          select: {
+            username: true,
+            id: true,
+          },
+        }));
+
+    return res.json({ success: true, result });
+  } catch (err) {
+    console.error("error searching users -- ", err.message);
+    res.status(500).send(err.message);
+  }
+}
+
 module.exports = {
   test,
   create_post,
+  posts_search,
   //
 };

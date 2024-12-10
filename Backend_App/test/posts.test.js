@@ -85,5 +85,12 @@ describe("Posts", () => {
     expect(res.body.posts.length).toBe(1);
   });
 
-  // test("user can search for others' posts")
+  test("user can search for others' posts", async () => {
+    const res = await request(app).get("/searchPosts?search=This");
+
+    console.log("debug-post search=", res.body);
+
+    expect(res.body.result.length).toBe(1);
+    expect(res.body.result[0].content).toEqual("This is the first test post.");
+  });
 });

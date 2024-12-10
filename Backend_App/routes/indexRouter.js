@@ -25,4 +25,6 @@ router.get("/postTest", postsController.test);
 
 router.post("/post", postsController.create_post);
 
+router.get("/searchPosts", postsController.posts_search);
+
 module.exports = router;
