@@ -183,4 +183,17 @@ describe("comments", () => {
 
     expect(postComments).toBeDefined();
   });
+
+  test("can access comments from an individual post", async () => {
+    const post = await prisma.post.findFirstOrThrow();
+    const res = await request(app).get(`/post/${post.id}`);
+
+    console.log(res.body);
+
+    expect(res.body.comments).toBeDefined();
+    expect(res.body.comments.length).toBe(1);
+  });
+
+  //todo:
+  // can access comments from a user's profile.
 });

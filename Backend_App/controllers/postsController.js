@@ -99,13 +99,21 @@ async function post_detail(req, res) {
         .json({ success: false, message: "missing post id." });
     }
 
+    // get post
     const post = await prisma.post.findUniqueOrThrow({
       where: {
         id: postId,
       },
     });
 
-    res.json({ success: true, result: post });
+    // get comments
+    const comments = await prisma.comment.findMany({
+      where: {
+        postId: postId,
+      },
+    });
+
+    res.json({ success: true, result: post, comments: comments });
   } catch (err) {
     console.error("error loading post,", err.message);
     return res.status(400).json({ success: false, message: err.message });
@@ -206,6 +214,7 @@ const comment_post = [
             .json({ success: false, message: "missing comment content." });
         }
 
+        // create comment database entry
         await prisma.comment.create({
           data: {
             creatorId: authData.user.id,
