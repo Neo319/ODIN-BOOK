@@ -28,7 +28,6 @@ const prisma = (() => {
 async function user_search(req, res) {
   try {
     const query = req.query.search || null;
-    console.log("debug -- user search query: ", query);
 
     let result;
 

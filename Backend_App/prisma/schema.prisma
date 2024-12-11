@@ -21,8 +21,10 @@ model user {
   comments comment[]
   // likes
 
-  followingIds  String[]
-  followedByIds String[]
+  followingIds    String[]
+  followedByIds   String[]
+  likedPostIds    String[]
+  likedCommentIds String[]
 }
 
 model post {
@@ -35,7 +37,6 @@ model post {
   createdAt DateTime @default(now())
 
   comments comment[]
-  // likes
 }
 
 model comment {

@@ -63,7 +63,6 @@ const create_post = [
 async function posts_search(req, res) {
   try {
     const query = req.query.search || null;
-    console.log("debug -- post search query: ", query);
 
     let result;
 
@@ -91,9 +90,33 @@ async function posts_search(req, res) {
   }
 }
 
+async function post_detail(req, res) {
+  try {
+    const postId = req.params.id;
+    if (!postId || postId === "") {
+      return res
+        .status(400)
+        .json({ success: false, message: "missing post id." });
+    }
+
+    const post = await prisma.post.findUniqueOrThrow({
+      where: {
+        id: postId,
+      },
+    });
+
+    res.json({ success: true, result: post });
+  } catch (err) {
+    console.error("error loading post,", err.message);
+    return res.status(400).json({ success: false, message: err.message });
+  }
+}
+
 module.exports = {
   test,
   create_post,
   posts_search,
+
+  post_detail,
   //
 };

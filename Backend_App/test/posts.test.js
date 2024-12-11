@@ -88,9 +88,25 @@ describe("Posts", () => {
   test("user can search for others' posts", async () => {
     const res = await request(app).get("/searchPosts?search=This");
 
-    console.log("debug-post search=", res.body);
-
     expect(res.body.result.length).toBe(1);
     expect(res.body.result[0].content).toEqual("This is the first test post.");
   });
+
+  test("posts can be viewed in detail via id", async () => {
+    const postId = (await prisma.post.findFirstOrThrow()).id;
+
+    const res = await request(app).get(`/post/${postId}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.result.content).toEqual("This is the first test post.");
+  });
+});
+
+describe("Likes", () => {
+  // test("adding a like to a post updates db", () => {
+  // })
+  //
+  // todo: likes cannot be added more than once (instead un-likes)
+  // todo: can view number of likes on own posts
+  // todo: can view number of likes on others' posts
 });
