@@ -19,7 +19,6 @@ model user {
   posts post[]
 
   comments comment[]
-  // likes
 
   followingIds    String[]
   followedByIds   String[]
@@ -49,4 +48,6 @@ model comment {
   // note: this is one-to-many
   postId String
   post   post   @relation(fields: [postId], references: [id])
+
+  content String
 }

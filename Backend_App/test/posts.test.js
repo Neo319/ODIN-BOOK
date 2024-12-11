@@ -123,8 +123,6 @@ describe("Likes", () => {
     expect(likes.length).toBe(1);
   });
 
-  //
-  // todo: can view number of likes on posts
   test("can view number of likes on posts", async () => {
     const postId = (await prisma.post.findFirstOrThrow()).id;
     const res = await request(app).get(`/post/${postId}`);
@@ -153,7 +151,6 @@ describe("Likes", () => {
     expect(res.body.likedPostIds.length).toBe(1);
   });
 
-  // todo: likes cannot be added more than once (instead un-likes)
   test("likes cannot be added more than once (instead un-likes)", async () => {
     const newToken = (
       await request(app)
@@ -170,5 +167,20 @@ describe("Likes", () => {
       where: { username: "test_user" },
     });
     expect(user.likedPostIds.length).toBe(0);
+  });
+});
+
+describe("comments", () => {
+  test("adding a comment updates db", async () => {
+    const postId = (await prisma.post.findFirstOrThrow()).id;
+    const res = await request(app)
+      .post(`/post/${postId}/comment`)
+      .send({ id: postId, content: "This is a test comment" })
+      .set("Authorization", `Bearer ${token}`);
+
+    const postComments = await prisma.comment.findFirstOrThrow();
+    console.log(postComments);
+
+    expect(postComments).toBeDefined();
   });
 });
