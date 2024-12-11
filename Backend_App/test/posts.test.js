@@ -179,21 +179,30 @@ describe("comments", () => {
       .set("Authorization", `Bearer ${token}`);
 
     const postComments = await prisma.comment.findFirstOrThrow();
-    console.log(postComments);
-
     expect(postComments).toBeDefined();
+    expect(postComments.content).toEqual("This is a test comment");
   });
 
   test("can access comments from an individual post", async () => {
     const post = await prisma.post.findFirstOrThrow();
     const res = await request(app).get(`/post/${post.id}`);
 
-    console.log(res.body);
-
     expect(res.body.comments).toBeDefined();
     expect(res.body.comments.length).toBe(1);
   });
 
-  //todo:
-  // can access comments from a user's profile.
+  test("can access comments from a user's profile.", async () => {
+    const newToken = (
+      await request(app)
+        .post("/login")
+        .send({ username: "test_user", password: "securepassword" })
+    ).body.token;
+
+    const res = await request(app)
+      .get(`/user`)
+      .set("Authorization", `Bearer ${newToken}`);
+
+    expect(res.body.comments).toBeDefined();
+    expect(res.body.comments.length).toBe(1);
+  });
 });

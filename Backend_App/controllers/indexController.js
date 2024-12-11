@@ -103,6 +103,13 @@ const user_detail = [
             },
           });
 
+          // getting comments
+          const comments = await prisma.comment.findMany({
+            where: {
+              creatorId: authData.user.id,
+            },
+          });
+
           const result = {
             username: authData.user.username,
             id: authData.user.id,
@@ -113,10 +120,9 @@ const user_detail = [
             followingIds: authData.user.followingIds,
             followedByIds: authData.user.followedByIds,
 
-            // These two will be implemented at a later time.
             posts: posts,
             likedPostIds: authData.user.likedPostIds,
-            comments: "wip",
+            comments: comments,
           };
 
           return res.json(result);
