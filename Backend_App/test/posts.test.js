@@ -27,6 +27,8 @@ let token;
 beforeAll(async () => {
   console.log("Setting up test database...");
 
+  execSync("npx prisma migrate reset --force --skip-generate");
+
   const newUser = await request(app)
     .post("/signup")
     .send({ username: "test_user", password: "securepassword" });
@@ -103,10 +105,27 @@ describe("Posts", () => {
 });
 
 describe("Likes", () => {
-  // test("adding a like to a post updates db", () => {
-  // })
+  test("adding a like to a post updates db", async () => {
+    const postId = (await prisma.post.findFirstOrThrow()).id;
+
+    const res = await request(app)
+      .post(`/post/${postId}/like`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+
+    const likes = (
+      await prisma.user.findUniqueOrThrow({ where: { username: "test_user" } })
+    ).likedPostIds;
+
+    expect(likes).toBeDefined();
+    expect(likes.length).toBe(1);
+  });
+
   //
-  // todo: likes cannot be added more than once (instead un-likes)
   // todo: can view number of likes on own posts
   // todo: can view number of likes on others' posts
+
+  // todo: likes cannot be added more than once (instead un-likes)
 });

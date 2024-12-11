@@ -112,11 +112,46 @@ async function post_detail(req, res) {
   }
 }
 
+const like_post = [
+  verify,
+  async function (req, res) {
+    jwt.verify(req.token, SECRET_KEY, async (error, authData) => {
+      if (error) {
+        console.error("unknown error", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+      }
+      try {
+        // get user and liked post
+        const userId = authData.user.id;
+        const postId = req.params.id;
+        if (!postId || postId === "") {
+          return res
+            .status(400)
+            .json({ success: false, message: "missing post id." });
+        }
+
+        const updatePost = await prisma.post.update({
+          where: { id: postId },
+          data: {
+            likes: { increment: 1 },
+          },
+        });
+
+        return res.json({ success: true });
+      } catch (err) {
+        console.error("error liking post", err.message);
+        return res.status(500).json({ success: false, message: error.message });
+      }
+    });
+  },
+];
+
 module.exports = {
   test,
   create_post,
   posts_search,
 
   post_detail,
+  like_post,
   //
 };

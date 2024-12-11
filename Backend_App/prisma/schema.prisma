@@ -37,6 +37,7 @@ model post {
   createdAt DateTime @default(now())
 
   comments comment[]
+  likes    Int       @default(0)
 }
 
 model comment {

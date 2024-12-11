@@ -28,6 +28,6 @@ router.post("/post", postsController.create_post);
 router.get("/searchPosts", postsController.posts_search);
 
 router.get("/post/:id", postsController.post_detail);
-// router.post("/post/:id/like")
+router.post("/post/:id/like", postsController.like_post);
 
 module.exports = router;
