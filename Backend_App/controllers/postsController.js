@@ -129,6 +129,9 @@ const like_post = [
             .status(400)
             .json({ success: false, message: "missing post id." });
         }
+        const user = await prisma.user.findUnique({
+          where: { username: "test_user" },
+        });
 
         // update the post with a new like
         const updatePost = await prisma.post.update({
@@ -139,21 +142,34 @@ const like_post = [
         });
 
         //update the user's liked posts
-        const updateUser = await prisma.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            likedPostIds: { push: postId },
-          },
-        });
-
-        console.log("debug-updateuser=", updateUser);
+        if (!user.likedPostIds.includes(postId)) {
+          // add like to new post
+          const updateUser = await prisma.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              likedPostIds: { push: postId },
+            },
+          });
+        } else {
+          // remove from likedPosts
+          const updateUser = await prisma.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              likedPostIds: {
+                set: user.likedPostIds.filter((id) => id !== postId),
+              },
+            },
+          });
+        }
 
         return res.json({ success: true });
       } catch (err) {
         console.error("error liking post", err.message);
-        return res.status(500).json({ success: false, message: error.message });
+        return res.status(500).json({ success: false, message: err.message });
       }
     });
   },

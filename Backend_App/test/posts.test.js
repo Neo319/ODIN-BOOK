@@ -27,6 +27,8 @@ let token;
 beforeAll(async () => {
   console.log("Setting up test database...");
 
+  execSync("npx prisma migrate reset --force");
+
   const newUser = await request(app)
     .post("/signup")
     .send({ username: "test_user", password: "securepassword" });
@@ -130,31 +132,43 @@ describe("Likes", () => {
     expect(res.body.result.likes).toBe(1);
   });
 
-  // todo: can view own liked posts
   test("can view own liked posts", async () => {
     const newToken = (
       await request(app)
         .post("/login")
         .send({ username: "test_user", password: "securepassword" })
     ).body.token;
-
     // ---- IMPORTANT NOTE: a new token must be generated to access new information because jwts are stateless.  ----
 
     const res = await request(app)
       .get("/user")
       .set("Authorization", `Bearer ${newToken}`);
 
-    console.log("debug-user=", res.body);
-
     const user = await prisma.user.findFirst({
       where: {
         username: "test_user",
       },
     });
-    console.log(user);
 
     expect(res.body.likedPostIds.length).toBe(1);
   });
 
   // todo: likes cannot be added more than once (instead un-likes)
+  test("likes cannot be added more than once (instead un-likes)", async () => {
+    const newToken = (
+      await request(app)
+        .post("/login")
+        .send({ username: "test_user", password: "securepassword" })
+    ).body.token;
+
+    const postId = (await prisma.post.findFirstOrThrow()).id;
+    const res = await request(app)
+      .post(`/post/${postId}/like`)
+      .set("Authorization", `Bearer ${newToken}`);
+
+    const user = await prisma.user.findFirstOrThrow({
+      where: { username: "test_user" },
+    });
+    expect(user.likedPostIds.length).toBe(0);
+  });
 });
