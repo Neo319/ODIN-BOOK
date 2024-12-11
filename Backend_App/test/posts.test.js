@@ -123,7 +123,38 @@ describe("Likes", () => {
 
   //
   // todo: can view number of likes on posts
-  // todo: can view number of likes on others' posts
+  test("can view number of likes on posts", async () => {
+    const postId = (await prisma.post.findFirstOrThrow()).id;
+    const res = await request(app).get(`/post/${postId}`);
+
+    expect(res.body.result.likes).toBe(1);
+  });
+
+  // todo: can view own liked posts
+  test("can view own liked posts", async () => {
+    const newToken = (
+      await request(app)
+        .post("/login")
+        .send({ username: "test_user", password: "securepassword" })
+    ).body.token;
+
+    // ---- IMPORTANT NOTE: a new token must be generated to access new information because jwts are stateless.  ----
+
+    const res = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${newToken}`);
+
+    console.log("debug-user=", res.body);
+
+    const user = await prisma.user.findFirst({
+      where: {
+        username: "test_user",
+      },
+    });
+    console.log(user);
+
+    expect(res.body.likedPostIds.length).toBe(1);
+  });
 
   // todo: likes cannot be added more than once (instead un-likes)
 });

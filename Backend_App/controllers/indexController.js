@@ -115,6 +115,7 @@ const user_detail = [
 
             // These two will be implemented at a later time.
             posts: posts,
+            likedPostIds: authData.user.likedPostIds,
             comments: "wip",
           };
 

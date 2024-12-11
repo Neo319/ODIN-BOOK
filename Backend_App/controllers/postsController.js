@@ -148,6 +148,8 @@ const like_post = [
           },
         });
 
+        console.log("debug-updateuser=", updateUser);
+
         return res.json({ success: true });
       } catch (err) {
         console.error("error liking post", err.message);
