@@ -130,10 +130,21 @@ const like_post = [
             .json({ success: false, message: "missing post id." });
         }
 
+        // update the post with a new like
         const updatePost = await prisma.post.update({
           where: { id: postId },
           data: {
             likes: { increment: 1 },
+          },
+        });
+
+        //update the user's liked posts
+        const updateUser = await prisma.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            likedPostIds: { push: postId },
           },
         });
 
