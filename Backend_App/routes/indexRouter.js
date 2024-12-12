@@ -5,6 +5,11 @@ const usersController = require("../controllers/usersController");
 const postsController = require("../controllers/postsController");
 const router = express.Router();
 
+// SERVER TEST ROUTE
+router.get("/servertest", async (req, res) => {
+  res.json({ success: true, status: "ok" });
+});
+
 router.get("/", (req, res) => {
   res.json({ message: "Welcome to project Odin-Book (WIP)" });
 });

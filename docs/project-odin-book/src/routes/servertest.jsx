@@ -7,15 +7,27 @@ export default function ServerTest() {
   const URL = import.meta.env.VITE_API_URL;
 
   async function runTest() {
-    const res = await fetch(`${URL}/servertest`);
+    fetch(URL + "/servertest")
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
 
-    if (res.body.success === true) {
-      setLoading(false);
-      setStatus(res.body.status);
-    } else {
-      setLoading(false);
-      setStatus("Server error!");
-    }
+        if (res.success === true) {
+          setLoading(false);
+          setStatus(res.status);
+        } else {
+          console.log(res);
+          setLoading(false);
+          setStatus("Server error!");
+        }
+      });
+  }
+
+  function redirect() {
+    window.location.href = "/";
   }
 
   runTest();
@@ -25,7 +37,14 @@ export default function ServerTest() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <p>Server Status: {JSON.stringify(status)}</p>
+        <p>
+          Server Status: {status}
+          <br />
+          You will now be redirected to the app. (temp: implement timer?)
+          {setTimeout(() => {
+            redirect();
+          }, 5000)}
+        </p>
       )}
     </>
   );
