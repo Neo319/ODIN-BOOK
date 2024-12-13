@@ -12,7 +12,6 @@ const router = require("./routes/indexRouter.js");
 app.use(express.json());
 
 // allowing requests from appropriate origins
-console.log(process.env.NODE_ENV);
 const allowedOrigins =
   process.env.NODE_ENV === "dev"
     ? "*" // development env

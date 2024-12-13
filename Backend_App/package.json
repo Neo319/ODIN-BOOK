@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --watch",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "build": "node ./scripts/build.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "prisma": "^6.0.1"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@prisma/client": "^6.0.1",
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
