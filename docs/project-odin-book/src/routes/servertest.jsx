@@ -49,17 +49,16 @@ export default function ServerTest() {
   return (
     <>
       <h1>server test lives here</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
+      {loading ? <p>Loading...</p> : <p>Server Status: {status}</p>}
+      {status === "ok" ? (
         <p>
-          Server Status: {status}
-          <br />
           You will now be redirected to the app. (temp: implement timer?)
           {setTimeout(() => {
             redirect();
           }, 5000)}
         </p>
+      ) : (
+        <></>
       )}
     </>
   );
