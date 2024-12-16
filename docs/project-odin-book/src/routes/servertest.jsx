@@ -9,8 +9,12 @@ export default function ServerTest() {
   async function runTest() {
     fetch(URL + "/servertest")
       .then((res) => {
-        console.log(res);
-        return res.json();
+        try {
+          console.log(res);
+          return res.json();
+        } catch (err) {
+          failureCallback(err);
+        }
       })
       .then((res) => {
         console.log(res);
@@ -19,11 +23,22 @@ export default function ServerTest() {
           setLoading(false);
           setStatus(res.status);
         } else {
-          console.log(res);
-          setLoading(false);
-          setStatus("Server error!");
+          failureCallback();
         }
+      })
+      .catch((err) => {
+        failureCallback(err);
       });
+
+    function failureCallback(err) {
+      if (err) {
+        console.log(err.message);
+        setStatus("server error -- " + err.message);
+      } else {
+        setStatus("server error.");
+      }
+      setLoading(false);
+    }
   }
 
   function redirect() {
