@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     const URL = import.meta.env.VITE_API_URL;
@@ -69,8 +69,30 @@ function App() {
         </li>
       </ul>
       <br />
-      information for dashboard:
-      <span>{JSON.stringify(posts)}</span>
+
+      <div className="dashboardPosts">
+        <h2>Recent Posts</h2>
+        <ul>
+          {posts !== null && Array.isArray(posts.result) ? (
+            <>
+              <ul>
+                {posts.result.map((post) => {
+                  <span>{JSON.stringify(post)}</span>;
+                  return (
+                    <li key={"dashboard#" + post.id}>
+                      <b>{post.creator.username}:</b>
+                      <br />
+                      {post.content}
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          ) : (
+            <>Loading posts...</>
+          )}
+        </ul>
+      </div>
     </>
   );
 }
