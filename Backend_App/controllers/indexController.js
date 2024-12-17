@@ -26,6 +26,7 @@ const prisma = (() => {
 // SIGN UP & create a user
 async function signup_post(req, res) {
   const { username, password } = req.body;
+  console.log("creating new user = ", username);
 
   if (!username || !password) {
     return res
@@ -41,7 +42,10 @@ async function signup_post(req, res) {
       },
     });
   } catch (err) {
-    return res.status(400).send({ message: "error during signup." });
+    console.error("error during db creation", err.message);
+    return res
+      .status(400)
+      .send({ message: "error during signup -- " + err.message });
   }
 
   res.json({

@@ -6,7 +6,7 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import SignUp from "./routes/signUp.jsx";
-// import Login from "./routes/login.jsx";
+import Login from "./routes/login.jsx";
 // import Dashboard from "./routes/dashboard.jsx";
 // import Message from "./routes/message.jsx";
 
@@ -27,10 +27,10 @@ const router = createBrowserRouter([
     path: "signup",
     element: <SignUp />,
   },
-  // {
-  //   path: "login",
-  //   element: <Login />,
-  // },
+  {
+    path: "login",
+    element: <Login />,
+  },
   // {
   //   path: "dashboard",
   //   element: <Dashboard />,

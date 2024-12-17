@@ -1,10 +1,9 @@
 import { useState } from "react";
 
-export default function SignUp() {
+export default function Login() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    password2: "",
   });
 
   // ---- handle changes to form data  ----
@@ -18,13 +17,9 @@ export default function SignUp() {
     }));
   }
 
-  // ---- Submitting the form data ----
+  //  ---- sending the login request ----
   function formSubmit(data) {
-    console.log("debug -- Url: ", import.meta.env.VITE_API_URL);
-    console.log("debug -- Data: ", data);
-
-    // sending the request
-    fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+    fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -35,21 +30,40 @@ export default function SignUp() {
       .then((response) => {
         console.log(response);
 
-        if (response.success === true) {
-          alert(`New user ${formData.username} successfully created.`);
+        if (response.success === true && response.token) {
+          alert(`Login success!`);
+
+          // attach token
+          localStorage.token = response.token;
+
           // redirect to login on success
-          window.location.href = "/login";
-        } else {
-          alert("There was an error! Try another username?");
+          window.location.href = "/";
         }
+        // notify if there is an error
       });
+  }
+
+  // ---- handle Logged in users ----
+  if (localStorage.getItem("token")) {
+    return (
+      <>
+        <p>Error... user already logged in.</p>
+        <a
+          href="/"
+          onClick={() => {
+            localStorage.clear();
+          }}
+        >
+          Log out
+        </a>
+      </>
+    );
   }
 
   return (
     <>
-      <h1>Hi. Signup page here.</h1>
+      <h1>Hi. Login Page here.</h1>
 
-      <h2>Create New User here.</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -76,17 +90,7 @@ export default function SignUp() {
         />
         <br />
 
-        <label htmlFor="password2">Confirm Password: </label>
-        <input
-          required={true}
-          type="password"
-          name="password2"
-          value={formData.password2}
-          onChange={handleChange}
-        />
-        <br />
-
-        <input type="submit" value="Create User" />
+        <input type="submit" value="Login" />
       </form>
     </>
   );
