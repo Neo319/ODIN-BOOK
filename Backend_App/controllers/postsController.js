@@ -78,8 +78,9 @@ async function posts_search(req, res) {
         (result = await prisma.post.findMany({
           take: 10,
           select: {
-            username: true,
             id: true,
+            content: true,
+            creator: true,
           },
         }));
 
