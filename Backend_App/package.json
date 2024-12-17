@@ -17,11 +17,11 @@
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
-    "prisma": "^6.0.1"
+    "prisma": "^6.1.0"
   },
   "dependencies": {
     "@faker-js/faker": "^9.3.0",
-    "@prisma/client": "^6.0.1",
+    "@prisma/client": "^6.1.0",
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
