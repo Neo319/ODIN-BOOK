@@ -80,7 +80,12 @@ async function posts_search(req, res) {
           select: {
             id: true,
             content: true,
-            creator: true,
+            creator: {
+              select: {
+                id: true,
+                username: true,
+              },
+            },
           },
         }));
 
