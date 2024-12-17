@@ -58,6 +58,15 @@ function App() {
         <li>
           <a href="/servertest">Server Test</a>
         </li>
+        <li>
+          <a href="/signup">Sign Up</a>
+        </li>
+        <li>
+          <a href="/login">Log In</a>
+        </li>
+        <li>
+          <a href="/logout">Log Out (only if logged in...)</a>
+        </li>
       </ul>
       <br />
       information for dashboard:
