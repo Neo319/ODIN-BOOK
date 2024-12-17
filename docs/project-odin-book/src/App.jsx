@@ -28,19 +28,33 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <h1>Project Odin Book</h1>
+      {/* Project info section: */}
+      <div className="infoDiv">
+        <h2>Description</h2>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          This project integrates back- and front-end development to create a
+          social media app, incliding users with login credentials, profiles and
+          photos; posts with text only (images etc are WIP); and the ability to
+          like posts, add comments to them, and follow users.
         </p>
+
+        <ul>
+          <li>Faker.js used to seed database</li>
+          <li>
+            <a
+              href="https://railway.app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Railway{" "}
+            </a>
+            used for backend deployment
+          </li>
+        </ul>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      links for development:
+      {/* temporary links  */}
+      <h2>vvv Links for development vvv</h2>
       <ul>
         <li>
           <a href="/servertest">Server Test</a>

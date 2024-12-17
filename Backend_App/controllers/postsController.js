@@ -75,7 +75,7 @@ async function posts_search(req, res) {
           take: 10,
         }))
       : // search with no query
-        (result = await prisma.user.findMany({
+        (result = await prisma.post.findMany({
           take: 10,
           select: {
             username: true,
