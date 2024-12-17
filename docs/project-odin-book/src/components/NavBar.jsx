@@ -10,7 +10,6 @@ export default function NavBar(user, highlight) {
 
   return (
     <>
-      <span>debug/temp: this is a NavBar.</span>
       <nav>
         <div className="navLinks">
           {user ? (
@@ -46,7 +45,7 @@ export default function NavBar(user, highlight) {
             </>
           )}
 
-          {/* other */}
+          <h2>Other</h2>
           <ul>
             <li>Dashboard</li>
             <li>Search Posts...</li>

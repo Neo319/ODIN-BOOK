@@ -32,10 +32,6 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   // {
-  //   path: "dashboard",
-  //   element: <Dashboard />,
-  // },
-  // {
   //   path: "message/:user",
   //   element: <Message />,
   // },

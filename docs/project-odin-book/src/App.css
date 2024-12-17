@@ -35,6 +35,34 @@
 
 /* custom styles */
 
+.main {
+  width: calc(100vw - 45em);
+
+  position: relative;
+  right: 10em;
+}
+
+/* Navbar component */
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: fixed;
+
+  height: 90vh;
+  right: 0;
+
+  width: 20em;
+  text-align: left;
+
+  padding-left: 2em;
+  border-left: 1px solid gray;
+}
+.navLinks h2 {
+  margin-left: 2em;
+}
+
 /* dashboard */
 .dashboardPosts ul {
   text-align: left;
@@ -45,3 +73,5 @@
   border: 2px solid gray;
   border-radius: 10px;
 }
+
+/* MOBILE STYLES */
