@@ -26,7 +26,11 @@ function App() {
       })
         .then((res) => {
           console.log("debug- user res", res);
-          if (!res.ok) return null;
+          if (!res.ok) {
+            localStorage.clear("token");
+            return null;
+          }
+
           return res.json();
         })
         .then((data) => {
