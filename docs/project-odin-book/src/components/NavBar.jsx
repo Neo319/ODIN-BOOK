@@ -20,9 +20,15 @@ export default function NavBar(user, highlight) {
               </div>
               <h2>My Profile</h2>
               <ul>
-                <li>View/Customize My Profile(wip)</li>
-                <li>Followed Users(wip)</li>
-                <li>My Posts(wip)</li>
+                <li>
+                  <a href="/myProfile">View/Customize My Profile(wip)</a>
+                </li>
+                <li>
+                  <a href="/follows">Followed Users(wip)</a>
+                </li>
+                <li>
+                  <a href="/myPosts">My Posts(wip)</a>
+                </li>
                 <li>
                   <a href="/logout">Log Out (only if logged in...)</a>
                 </li>
@@ -47,9 +53,15 @@ export default function NavBar(user, highlight) {
 
           <h2>Other</h2>
           <ul>
-            <li>Dashboard</li>
-            <li>Search Posts...</li>
-            <li>User Index</li>
+            <li>
+              <a href="/">Dashboard</a>
+            </li>
+            <li>
+              <a href="/searchPosts">Search Posts...</a>
+            </li>
+            <li>
+              <a href="/userIndex">User Index</a>
+            </li>
           </ul>
         </div>
       </nav>

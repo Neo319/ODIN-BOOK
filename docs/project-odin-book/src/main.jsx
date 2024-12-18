@@ -7,8 +7,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import SignUp from "./routes/signUp.jsx";
 import Login from "./routes/login.jsx";
-// import Dashboard from "./routes/dashboard.jsx";
-// import Message from "./routes/message.jsx";
+import Logout from "./routes/logout.jsx";
+
+import MyProfile from "./routes/myProfile.jsx";
+import Follows from "./routes/Follows.jsx";
+import MyPosts from "./routes/myPosts.jsx";
+import UserIndex from "./routes/userIndex.jsx";
+import SearchPosts from "./routes/searchPosts.jsx";
 
 import ServerTest from "./routes/servertest.jsx";
 
@@ -23,6 +28,7 @@ const router = createBrowserRouter([
     element: <ServerTest />,
   },
 
+  // ---- AUTHENTICATION ----
   {
     path: "signup",
     element: <SignUp />,
@@ -31,10 +37,33 @@ const router = createBrowserRouter([
     path: "login",
     element: <Login />,
   },
-  // {
-  //   path: "message/:user",
-  //   element: <Message />,
-  // },
+  {
+    path: "logout",
+    element: <Logout />,
+  },
+
+  // ---- USERS & POSTS ----
+  {
+    path: "myProfile", //include param username
+    element: <MyProfile />,
+  },
+  {
+    path: "follows", // include param username
+    element: <Follows />,
+  },
+  {
+    path: "myPosts", // include param username
+    element: <MyPosts />,
+  },
+
+  {
+    path: "userIndex",
+    element: <UserIndex />,
+  },
+  {
+    path: "searchPosts", // include param - any search queries
+    element: <SearchPosts />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
