@@ -21,7 +21,9 @@ export default function NavBar(user, highlight) {
               <h2>My Profile</h2>
               <ul>
                 <li>
-                  <a href="/myProfile">View/Customize My Profile(wip)</a>
+                  <a href={`/myProfile/${user.username}`}>
+                    View/Customize My Profile(wip)
+                  </a>
                 </li>
                 <li>
                   <a href="/follows">Followed Users(wip)</a>
