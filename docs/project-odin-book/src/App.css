@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -36,6 +35,7 @@
 /* custom styles */
 
 .main {
+  margin: 2rem;
   width: calc(100vw - 45em);
 
   position: relative;
@@ -44,17 +44,17 @@
 
 /* Navbar component */
 .navLinks {
+  background-color: #242424;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: left;
 
   position: fixed;
-
   height: 90vh;
   right: 0;
-
   width: 20em;
-  text-align: left;
 
   padding-left: 2em;
   border-left: 1px solid gray;
@@ -66,6 +66,7 @@
 /* dashboard */
 .dashboardPosts ul {
   text-align: left;
+  max-width: 85vw;
 }
 .dashboardPosts li {
   margin: 0.5em;
@@ -75,3 +76,23 @@
 }
 
 /* MOBILE STYLES */
+@media screen and (max-width: 70em) {
+  .main {
+    padding-top: 10em;
+    width: 85vw;
+    right: 0;
+    top: 5em;
+  }
+  .navLinks {
+    flex-direction: row;
+
+    height: 8em;
+    width: 100vw;
+    left: 0;
+
+    padding: 0;
+    border-left: none;
+    border-bottom: 1px solid gray;
+    margin: 0;
+  }
+}
