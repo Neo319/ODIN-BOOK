@@ -44,8 +44,7 @@ const dbSeed = (async () => {
           username: faker.internet.username(),
           password: faker.internet.password(),
 
-          // TODO
-          // avatar: faker.image.avatar(),  -- requires different schema
+          avatarURL: faker.image.avatar(),
 
           createdAt: faker.date.past(),
         },
@@ -55,8 +54,6 @@ const dbSeed = (async () => {
     console.log("created users. Creating new post...");
 
     // create 15 posts
-
-    // first ... create one post?
     for (i = 0; i < 15; i++) {
       // determine poster id randomly
 
