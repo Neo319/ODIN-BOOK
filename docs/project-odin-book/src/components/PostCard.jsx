@@ -14,9 +14,12 @@ export default function PostCard(content) {
 
   return (
     <div className="PostCard">
-      <b>{content.creator.username}:</b>
-      <br />
-      {content.content}
+      <img src={content.creator.avatarURL} alt="avatar" width="40px" />
+      <div>
+        <b>{content.creator.username}:</b>
+        <br />
+        {content.content}
+      </div>
     </div>
   );
 }

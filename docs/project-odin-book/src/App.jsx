@@ -39,8 +39,6 @@ function App() {
     }
   }, []);
 
-  console.log(posts[1]);
-
   return (
     <>
       {NavBar(user, "Dashboard")}

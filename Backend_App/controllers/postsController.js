@@ -84,6 +84,7 @@ async function posts_search(req, res) {
               select: {
                 id: true,
                 username: true,
+                avatarURL: true,
               },
             },
           },
