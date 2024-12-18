@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
+import PostCard from "./components/PostCard";
 
 function App() {
   const [posts, setPosts] = useState(null);
@@ -25,7 +26,6 @@ function App() {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          console.log("debug- user res", res);
           if (!res.ok) {
             localStorage.clear("token");
             return null;
@@ -34,7 +34,6 @@ function App() {
           return res.json();
         })
         .then((data) => {
-          console.log("debug- userdata = ", data);
           setUser(data);
         });
     }
@@ -77,23 +76,6 @@ function App() {
             </li>
           </ul>
         </div>
-        {/* temporary links  */}
-        <h2>vvv Links for development vvv</h2>
-        <ul>
-          <li>
-            <a href="/servertest">Server Test</a>
-          </li>
-          <li>
-            <a href="/signup">Sign Up</a>
-          </li>
-          <li>
-            <a href="/login">Log In</a>
-          </li>
-          <li>
-            <a href="/logout">Log Out (only if logged in...)</a>
-          </li>
-        </ul>
-        <br />
 
         <div className="dashboardPosts">
           <h2>Recent Posts</h2>
@@ -105,9 +87,7 @@ function App() {
                     <span>{JSON.stringify(post)}</span>;
                     return (
                       <li key={"dashboard#" + post.id}>
-                        <b>{post.creator.username}:</b>
-                        <br />
-                        {post.content}
+                        <PostCard {...post} />
                       </li>
                     );
                   })}
