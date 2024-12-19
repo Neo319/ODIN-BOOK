@@ -43,11 +43,19 @@ export default function MyProfile() {
 
         {/* TODO implement a default avatar */}
         <div>
-          <img srcSet={user.avatarURL} alt="avatar" />
+          <img
+            className="avatar"
+            src={
+              user.avatarURL == undefined
+                ? import.meta.env.VITE_DEFAULT_AVATAR_URL
+                : user.avatarURL
+            }
+            alt="avatar"
+          />
         </div>
         <button>Edit Avatar...</button>
 
-        <div>
+        <div className="detailDiv">
           {Detail(
             {
               username: user.username,

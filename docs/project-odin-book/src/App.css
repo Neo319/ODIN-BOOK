@@ -87,6 +87,16 @@
   margin-right: 2em;
 }
 
+/* for Detail component */
+.avatar {
+  border-radius: 100%;
+}
+
+.detailDiv ul {
+  list-style: none;
+  padding: 0;
+}
+
 /* MOBILE STYLES */
 @media screen and (max-width: 70em) {
   .main {
