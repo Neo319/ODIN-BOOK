@@ -14,9 +14,16 @@ export default function NavBar(user, highlight) {
         <div className="navLinks">
           {user ? (
             <>
-              <div className="navBarAvatar">
-                {/* <img src="" alt="your avatar" /> */}
-                <span> temp: avatar should be displayed in this div</span>
+              <div>
+                <img
+                  className="navBarAvatar"
+                  src={
+                    user.avatarURL == undefined
+                      ? import.meta.env.VITE_DEFAULT_AVATAR_URL
+                      : user.avatarURL
+                  }
+                  alt="avatar"
+                />
               </div>
               <h2>My Profile</h2>
               <ul>
