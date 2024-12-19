@@ -6,6 +6,7 @@ import Detail from "../components/Details";
 
 export default function MyProfile() {
   const [user, setUser] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     // retrieve posts to render on dashboard
@@ -31,8 +32,6 @@ export default function MyProfile() {
     }
   }, []);
 
-  //TODO: create variables containing correct data to send to details component
-
   return user === null ? (
     <>Loading...</>
   ) : (
@@ -56,15 +55,32 @@ export default function MyProfile() {
         <button>Edit Avatar...</button>
 
         <div className="detailDiv">
+          <h2>User Info</h2>
+          {!isEditing ? (
+            Detail(
+              {
+                username: user.username,
+                id: user.id,
+                "created at": user.createdAt,
+                bio: user.bio || "(No bio created yet!)",
+              },
+              true
+            )
+          ) : (
+            <>editing</>
+          )}
+        </div>
+
+        <div className="detailDiv">
+          <h2>Posts and Comments</h2>
           {Detail(
             {
-              username: user.username,
-              id: user.id,
-              "created at": user.createdAt,
-              bio: user.bio || "(No bio created yet!)",
+              posts: user.posts.length,
+              comments: user.comments.length,
             },
-            true
+            false
           )}
+          <a href={"/myPosts"}>See My Posts & Comments... </a>
         </div>
       </div>
     </>
