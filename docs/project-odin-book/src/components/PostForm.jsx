@@ -8,4 +8,6 @@ export default function PostForm(content, route) {
   console.log("not implemented: PostForm");
   console.log(content);
   console.log(route);
+
+  return <>temp: post form here</>;
 }

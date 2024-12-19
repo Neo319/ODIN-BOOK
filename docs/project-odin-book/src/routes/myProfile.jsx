@@ -56,18 +56,16 @@ export default function MyProfile() {
 
         <div className="detailDiv">
           <h2>User Info</h2>
-          {!isEditing ? (
-            Detail(
-              {
-                username: user.username,
-                id: user.id,
-                "created at": user.createdAt,
-                bio: user.bio || "(No bio created yet!)",
-              },
-              true
-            )
-          ) : (
-            <>editing</>
+          {Detail(
+            {
+              username: user.username,
+              id: user.id,
+              "created at": user.createdAt,
+              bio: user.bio || "(No bio created yet!)",
+            },
+            true,
+            isEditing,
+            setIsEditing
           )}
         </div>
 
