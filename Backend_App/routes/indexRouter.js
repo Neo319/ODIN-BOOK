@@ -25,6 +25,8 @@ router.get("/searchUsers", usersController.user_search);
 
 router.post("/follow/:userId", usersController.follow_user);
 
+router.post("/updateUser", usersController.update_user);
+
 // --- routes related to posts ---
 router.get("/postTest", postsController.test);
 

@@ -125,8 +125,50 @@ const follow_user = [
   },
 ];
 
+const update_user = [
+  verify,
+  async function (req, res) {
+    jwt.verify(req.token, SECRET_KEY, async (err, authData) => {
+      if (err) {
+        return res.status(401).send({ message: "error during authorization." });
+      } else {
+        try {
+          const user = authData.user;
+          const updatedUserData = req.body.data;
+          if (!user || !updatedUserData) {
+            return res.status(400).send({ message: "needed data is missing." });
+          }
+
+          // fields: username, password, bio, avatar,
+
+          await prisma.user.update({
+            where: {
+              id: authData.user.id,
+            },
+            data: {
+              username: updatedUserData.username,
+              password: updatedUserData.password,
+              bio: updatedUserData.bio,
+              avatarURL: updatedUserData.avatarURL,
+            },
+          });
+          console.log("updated user " + updatedUserData.username);
+          res.send({ success: true });
+        } catch (err) {
+          console.error("error during user update", err.message);
+          res
+            .status(400)
+            .send({ message: "error during user update " + err.message });
+        }
+      }
+    });
+  },
+];
+
 module.exports = {
   user_search,
   follow_user,
+
+  update_user,
   //
 };
