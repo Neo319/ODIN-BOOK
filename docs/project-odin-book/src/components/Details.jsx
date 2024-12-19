@@ -37,7 +37,13 @@ export default function Detail(
                 </li>
               );
             })
-          : PostForm(content, import.meta.env.VITE_API_URL + "/updateUser")}
+          : PostForm(
+              {
+                username: content.username,
+                bio: content.bio,
+              },
+              import.meta.env.VITE_API_URL + "/updateUser"
+            )}
       </ul>
     </>
   );
