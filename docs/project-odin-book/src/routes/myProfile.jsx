@@ -2,6 +2,7 @@ import "../App.css";
 import { useState, useEffect } from "react";
 
 import NavBar from "../components/NavBar";
+import Detail from "../components/Details";
 
 export default function MyProfile() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,8 @@ export default function MyProfile() {
         });
     }
   }, []);
+
+  //TODO: create variable containing correct data to send to details component
 
   return user === null ? (
     <>Loading...</>
@@ -60,6 +63,11 @@ export default function MyProfile() {
           <li>posts: {user.posts.length}</li>
           <li>comments: {user.comments.length}</li>
         </ul>
+      </div>
+
+      <div>
+        detail component test
+        {Detail(user, true)}
       </div>
     </>
   );
