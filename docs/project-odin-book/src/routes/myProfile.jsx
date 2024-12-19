@@ -31,7 +31,7 @@ export default function MyProfile() {
     }
   }, []);
 
-  //TODO: create variable containing correct data to send to details component
+  //TODO: create variables containing correct data to send to details component
 
   return user === null ? (
     <>Loading...</>
@@ -43,31 +43,21 @@ export default function MyProfile() {
 
         {/* TODO implement a default avatar */}
         <div>
-          <img src={user.avatarURL} alt="avatar" />
+          <img srcSet={user.avatarURL} alt="avatar" />
         </div>
         <button>Edit Avatar...</button>
 
-        <div className="myProfileList">
-          <h2>Info</h2>
-          <button>Edit...</button>
+        <div>
+          {Detail(
+            {
+              username: user.username,
+              id: user.id,
+              "created at": user.createdAt,
+              bio: user.bio || "(No bio created yet!)",
+            },
+            true
+          )}
         </div>
-        <ul>
-          <li>id: {user.id}</li>
-          <li>username: {user.username}</li>
-          <li>bio: {user.bio || "empty..."}</li>
-
-          <div>
-            <h2>Posts and Comments</h2>
-            <button>Edit...</button>
-          </div>
-          <li>posts: {user.posts.length}</li>
-          <li>comments: {user.comments.length}</li>
-        </ul>
-      </div>
-
-      <div>
-        detail component test
-        {Detail(user, true)}
       </div>
     </>
   );
