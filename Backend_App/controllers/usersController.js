@@ -134,22 +134,25 @@ const update_user = [
       } else {
         try {
           const user = authData.user;
-          const updatedUserData = req.body.data;
+          const updatedUserData = req.body;
+          console.log("debug: ", updatedUserData);
           if (!user || !updatedUserData) {
+            console.error("400 missing needed data");
             return res.status(400).send({ message: "needed data is missing." });
           }
 
           // fields: username, password, bio, avatar,
+          // ** TODO: because of jwt, need to create new token here.**
 
           await prisma.user.update({
             where: {
               id: authData.user.id,
             },
             data: {
-              username: updatedUserData.username,
-              password: updatedUserData.password,
-              bio: updatedUserData.bio,
-              avatarURL: updatedUserData.avatarURL,
+              username: updatedUserData.username || authData.user.username,
+              password: updatedUserData.password || authData.user.password,
+              bio: updatedUserData.bio || authData.user.bio,
+              avatarURL: updatedUserData.avatarURL || authData.user.avatarURL,
             },
           });
           console.log("updated user " + updatedUserData.username);

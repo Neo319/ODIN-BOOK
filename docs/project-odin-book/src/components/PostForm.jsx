@@ -19,9 +19,27 @@ export default function PostForm(content, route) {
         <input
           type="submit"
           value="Submit"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
             console.log("temp: sending to ", route);
+
+            // get form data here (username,password,bio,avatarURL)
+            const data = document.forms[0].elements; // htmlformscollection
+            console.log("data: ", data);
+
+            // send request to update user with specialized data object
+            await fetch(route, {
+              method: "POST",
+              body: {
+                // data: data,
+              },
+              headers: {
+                Authorization: `Bearer ${null}`,
+              },
+            }).then((res) => {
+              console.log("debug: update jwt here.");
+              console.log("res-", res);
+            });
           }}
         />
       </form>
