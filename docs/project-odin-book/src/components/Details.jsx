@@ -22,7 +22,7 @@ export default function Detail(
         {isEditable ? (
           <button
             onClick={() => {
-              setIsEditing(true);
+              isEditing ? setIsEditing(false) : setIsEditing(true);
             }}
           >
             {!isEditing ? "Edit" : "Cancel"}
