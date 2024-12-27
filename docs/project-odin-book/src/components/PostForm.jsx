@@ -4,7 +4,12 @@
 // (fields should be objects with props: type, name, value.)
 
 // route: the URL this form submits to.
-export default function PostForm(content, route) {
+// formData -- state inherited from parent components.
+export default function PostForm(content, route, formData, setFormData) {
+  function handleChange() {
+    // change form data here
+  }
+
   return (
     <>
       <form action="">
@@ -34,6 +39,7 @@ export default function PostForm(content, route) {
                 // data: data,
               },
               headers: {
+                // temp: actually send req when ready.
                 Authorization: `Bearer ${null}`,
               },
             }).then((res) => {

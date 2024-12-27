@@ -8,6 +8,8 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
+  const [formData, setFormData] = useState([]);
+
   useEffect(() => {
     // retrieve posts to render on dashboard
     const URL = import.meta.env.VITE_API_URL;
@@ -64,8 +66,11 @@ export default function MyProfile() {
               bio: user.bio || "(No bio created yet!)",
             },
             true,
+            // passing state hooks for use in components
             isEditing,
-            setIsEditing
+            setIsEditing,
+            formData,
+            setFormData
           )}
         </div>
 

@@ -10,7 +10,9 @@ export default function Detail(
   content,
   isEditable,
   isEditing = false,
-  setIsEditing = null
+  setIsEditing = null,
+  formData,
+  setFormData
 ) {
   if (!content) return <> -- Detail component error: missing content --</>;
 
@@ -42,7 +44,9 @@ export default function Detail(
                 username: content.username,
                 bio: content.bio,
               },
-              import.meta.env.VITE_API_URL + "/updateUser"
+              import.meta.env.VITE_API_URL + "/updateUser",
+              formData,
+              setFormData
             )}
       </ul>
     </>
