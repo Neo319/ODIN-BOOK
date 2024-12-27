@@ -42,7 +42,6 @@ export default function MyProfile() {
       <div className="main">
         <h1>{"Profile of " + user.username}</h1>
 
-        {/* TODO implement a default avatar */}
         <div>
           <img
             className="avatar"
@@ -54,7 +53,7 @@ export default function MyProfile() {
             alt="avatar"
           />
         </div>
-        <button>Edit Avatar...</button>
+        {/* TODO: changing avatar functionality */}
 
         <div className="detailDiv">
           <h2>User Info</h2>
