@@ -4,10 +4,13 @@
 // (fields should be objects with props: type, name, value.)
 
 // route: the URL this form submits to.
-// formData -- state inherited from parent components.
+// formData, setFormData -- state inherited from parent components.
 export default function PostForm(content, route, formData, setFormData) {
-  function handleChange() {
-    // change form data here
+  function handleChange(e) {
+    const oldData = formData || content;
+
+    const newData = { ...oldData, [e.target.name]: e.target.value };
+    setFormData(newData);
   }
 
   return (
@@ -17,7 +20,14 @@ export default function PostForm(content, route, formData, setFormData) {
           return (
             <div key={"PostForm#" + key}>
               <label htmlFor={key}>{key} :</label>
-              <input type="text" defaultValue={content[key]} />
+              <input
+                name={key}
+                type="text"
+                defaultValue={content[key]}
+                onInput={(e) => {
+                  handleChange(e);
+                }}
+              />
             </div>
           );
         })}
@@ -26,25 +36,31 @@ export default function PostForm(content, route, formData, setFormData) {
           value="Submit"
           onClick={async (e) => {
             e.preventDefault();
-            console.log("temp: sending to ", route);
 
-            // get form data here (username,password,bio,avatarURL)
-            const data = document.forms[0].elements; // htmlformscollection
-            console.log("data: ", data);
+            if (!formData) return alert("missing data: nothing to update.");
 
-            // send request to update user with specialized data object
+            const updatedUser = {
+              username: formData.username,
+              bio: formData.bio,
+            };
+
             await fetch(route, {
               method: "POST",
-              body: {
-                // data: data,
-              },
+              body: JSON.stringify(updatedUser),
               headers: {
-                // temp: actually send req when ready.
-                Authorization: `Bearer ${null}`,
+                Authorization: `Bearer ${localStorage.token}`,
+                "Content-Type": "application/json", // Indicate JSON data
               },
             }).then((res) => {
-              console.log("debug: update jwt here.");
-              console.log("res-", res);
+              console.log(res);
+
+              if (res.ok) {
+                console.log("debug: update jwt here.");
+                // temp: require new login
+                alert("user changed successfully. Login with new credentials.");
+                localStorage.clear("token");
+                window.location.href = "/login";
+              }
             });
           }}
         />

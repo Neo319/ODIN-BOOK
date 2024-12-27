@@ -136,7 +136,11 @@ const update_user = [
           const user = authData.user;
           const updatedUserData = req.body;
           console.log("debug: ", updatedUserData);
-          if (!user || !updatedUserData) {
+
+          if (
+            !Object.keys(user).length ||
+            !Object.keys(updatedUserData).length
+          ) {
             console.error("400 missing needed data");
             return res.status(400).send({ message: "needed data is missing." });
           }

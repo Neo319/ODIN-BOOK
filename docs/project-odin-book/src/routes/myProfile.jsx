@@ -8,7 +8,7 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState();
 
   useEffect(() => {
     // retrieve posts to render on dashboard
