@@ -5,12 +5,12 @@ import PostCard from "../components/PostCard";
 
 export default function SearchPosts() {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState({ result: [] });
+  const [loading, setLoading] = useState(true);
+
+  const URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    // retrieve posts to render on dashboard
-    const URL = import.meta.env.VITE_API_URL;
-
     const token = localStorage.getItem("token");
     // determine if user is logged in
     if (token) {
@@ -29,32 +29,67 @@ export default function SearchPosts() {
           setUser(data);
         });
     }
-  }, []);
+
+    fetch(`${URL}/searchPosts/`).then((res) => {
+      res.json().then((data) => {
+        setPosts(data);
+        setLoading(false);
+      });
+    });
+  }, [URL]);
 
   return (
     <>
       {NavBar(user, "Search Posts")}
-      <h1>Search Posts page here</h1>
+      <div className="main">
+        <h1>Search Posts page here</h1>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const search = document.forms[0][0].value;
-          console.log(search);
-          fetch(
-            `${
-              import.meta.env.VITE_API_URL
-            }/searchPosts?search=${encodeURIComponent(search)}`
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              setPosts({ result: data });
-            });
-        }}
-      >
-        <input type="text" placeholder="Search by text content..." />
-      </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setLoading(true);
+            setPosts({ result: [] });
+            const search = document.getElementById("search").value;
+            console.log(search);
+            fetch(
+              `${
+                import.meta.env.VITE_API_URL
+              }/searchPosts?search=${encodeURIComponent(search)}`
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                setPosts(data);
+                setLoading(false);
+              });
+          }}
+        >
+          <input
+            id="search"
+            type="text"
+            placeholder="Search by text content..."
+          />
+        </form>
+
+        {/* rendering posts */}
+        <div>
+          {!loading && posts.result.length > 0 ? (
+            <>
+              <ul>
+                {posts.result.map((post) => {
+                  return (
+                    <li key={"dashboard#" + post.id}>
+                      <PostCard {...post} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          ) : (
+            <>Loading posts...</>
+          )}
+        </div>
+      </div>
     </>
   );
 }

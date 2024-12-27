@@ -73,6 +73,17 @@ async function posts_search(req, res) {
             content: { contains: query },
           },
           take: 10,
+          select: {
+            id: true,
+            content: true,
+            creator: {
+              select: {
+                id: true,
+                username: true,
+                avatarURL: true,
+              },
+            },
+          },
         }))
       : // search with no query
         (result = await prisma.post.findMany({
