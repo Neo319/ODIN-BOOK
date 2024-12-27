@@ -43,6 +43,7 @@ export default function Detail(
               {
                 username: content.username,
                 bio: content.bio,
+                changePassword: "",
               },
               import.meta.env.VITE_API_URL + "/updateUser",
               formData,

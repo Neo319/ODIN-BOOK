@@ -154,7 +154,9 @@ const update_user = [
             },
             data: {
               username: updatedUserData.username || authData.user.username,
-              password: updatedUserData.password || authData.user.password,
+              password:
+                bcrypt.hashSync(updatedUserData.password) ||
+                authData.user.password,
               bio: updatedUserData.bio || authData.user.bio,
               avatarURL: updatedUserData.avatarURL || authData.user.avatarURL,
             },

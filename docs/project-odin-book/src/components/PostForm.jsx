@@ -42,6 +42,7 @@ export default function PostForm(content, route, formData, setFormData) {
             const updatedUser = {
               username: formData.username,
               bio: formData.bio,
+              password: formData.changePassword || null, // will not change if empty
             };
 
             await fetch(route, {
