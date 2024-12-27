@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../App.css";
 
 import NavBar from "../components/NavBar";
 import PostCard from "../components/PostCard";
@@ -72,7 +73,7 @@ export default function SearchPosts() {
         </form>
 
         {/* rendering posts */}
-        <div>
+        <div className="dashboardPosts">
           {!loading && posts.result.length > 0 ? (
             <>
               <ul>

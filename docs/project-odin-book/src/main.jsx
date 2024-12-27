@@ -16,6 +16,7 @@ import UserIndex from "./routes/userIndex.jsx";
 import SearchPosts from "./routes/searchPosts.jsx";
 
 import ServerTest from "./routes/servertest.jsx";
+import PostDetail from "./routes/postDetail.jsx";
 
 // client side routes.
 const router = createBrowserRouter([
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "searchPosts", // include param - any search queries
     element: <SearchPosts />,
+  },
+  {
+    path: "postdetail/:id",
+    element: <PostDetail />,
   },
 ]);
 

@@ -13,13 +13,15 @@ export default function PostCard(content) {
   }
 
   return (
-    <div className="PostCard">
-      <img src={content.creator.avatarURL} alt="avatar" width="40px" />
-      <div>
-        <b>{content.creator.username}:</b>
-        <br />
-        {content.content}
+    <a href={`postDetail/${content.id}`}>
+      <div className="PostCard">
+        <img src={content.creator.avatarURL} alt="avatar" width="40px" />
+        <div>
+          <b>{content.creator.username}:</b>
+          <br />
+          {content.content}
+        </div>
       </div>
-    </div>
+    </a>
   );
 }
