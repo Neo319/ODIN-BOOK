@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import NavBar from "../components/NavBar";
+import Detail from "../components/Details";
 
 export default function PostDetail() {
   const [user, setUser] = useState(null);
@@ -11,6 +12,23 @@ export default function PostDetail() {
   const params = useParams();
 
   useEffect(() => {
+    //getting post data
+    fetch(`${URL}/post/${encodeURIComponent(params.id)}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((postData) => {
+        console.log(postData);
+        setData({
+          id: postData.result.id,
+          creatorId: postData.result.creatorId,
+          creator: postData.result.creator.username,
+          content: postData.result.content,
+          createdAt: postData.result.createdAt,
+          likes: postData.result.likes,
+        });
+      });
+
     const token = localStorage.getItem("token");
     // determine if user is logged in
     if (token) {
@@ -28,27 +46,25 @@ export default function PostDetail() {
           setUser(data);
         });
     }
-
-    //getting post data
-    fetch(`${URL}/post/${encodeURIComponent(params.id)}`)
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((postData) => {
-        console.log(postData);
-        setData(postData);
-      });
   }, [URL, params]);
 
-  console.log(params.id);
-  console.log("debug - data :", data);
+  // TODO: implementing comments and LIKE BUTTON here.
+
   return (
     <>
       {NavBar(user, null)}
       <div className="main">
-        <h1>Hi. Post Detail page here.</h1>
-        <span>{JSON.stringify(data)}</span>
+        <h1>Post Detail</h1>
+
+        <div>
+          <h2>Info:</h2>
+          {Detail(data, false)}
+        </div>
+
+        <div>
+          <h2>Comments:</h2>
+          <span>WIP</span>
+        </div>
       </div>
     </>
   );

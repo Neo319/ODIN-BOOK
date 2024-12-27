@@ -122,6 +122,18 @@ async function post_detail(req, res) {
       where: {
         id: postId,
       },
+      select: {
+        id: true,
+        creatorId: true,
+        content: true,
+        createdAt: true,
+        likes: true,
+        creator: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
 
     // get comments
