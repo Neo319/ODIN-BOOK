@@ -8,7 +8,7 @@ export default function PostDetail() {
   const [data, setData] = useState(null);
 
   const URL = import.meta.env.VITE_API_URL;
-  const postId = useParams("id");
+  const params = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,21 +30,25 @@ export default function PostDetail() {
     }
 
     //getting post data
-    fetch(`${URL}/post/${encodeURIComponent(postId)}`)
+    fetch(`${URL}/post/${encodeURIComponent(params.id)}`)
       .then((res) => {
-        res.json();
+        console.log(res);
+        return res.json();
       })
       .then((postData) => {
+        console.log(postData);
         setData(postData);
       });
-  }, [URL, postId]);
+  }, [URL, params]);
 
-  console.log(postId);
+  console.log(params.id);
+  console.log("debug - data :", data);
   return (
     <>
       {NavBar(user, null)}
       <div className="main">
         <h1>Hi. Post Detail page here.</h1>
+        <span>{JSON.stringify(data)}</span>
       </div>
     </>
   );
