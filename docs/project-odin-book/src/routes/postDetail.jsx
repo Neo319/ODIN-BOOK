@@ -48,8 +48,6 @@ export default function PostDetail() {
     }
   }, [URL, params]);
 
-  // TODO: implementing comments and LIKE BUTTON here.
-
   return (
     <>
       {NavBar(user, null)}
