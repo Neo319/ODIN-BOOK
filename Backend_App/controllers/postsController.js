@@ -168,8 +168,10 @@ const like_post = [
             .json({ success: false, message: "missing post id." });
         }
         const user = await prisma.user.findUnique({
-          where: { username: "test_user" },
+          where: { id: userId },
         });
+
+        console.log("like post debug - user: ", user);
 
         //update the user's liked posts
         if (!user.likedPostIds.includes(postId)) {

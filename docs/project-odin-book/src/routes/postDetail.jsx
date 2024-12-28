@@ -61,6 +61,34 @@ export default function PostDetail() {
           {Detail(data, false)}
         </div>
 
+        {user ? (
+          <button
+            onClick={() => {
+              console.log(data.id);
+              fetch(`${URL}/post/${data.id}/like`, {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.token}`,
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((res) => {
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log(result);
+                  if (result.success) {
+                    window.location.reload();
+                  }
+                });
+            }}
+          >
+            Like this Post ... (WIP)
+          </button>
+        ) : (
+          <></>
+        )}
+
         <div>
           <h2>Comments:</h2>
           <span>WIP</span>
