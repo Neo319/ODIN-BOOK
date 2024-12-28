@@ -55,6 +55,7 @@
   position: fixed;
   height: 90vh;
   right: 0;
+  top: 10px;
   width: 20em;
 
   padding-left: 2em;
@@ -106,7 +107,7 @@
 }
 
 /* MOBILE STYLES */
-@media screen and (max-width: 70em) {
+@media screen and (max-width: 1200px) {
   .main {
     padding-top: 10em;
     padding-bottom: 10em;
