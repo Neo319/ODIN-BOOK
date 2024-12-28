@@ -52,7 +52,7 @@ async function user_search(req, res) {
           },
         }));
 
-    return res.json({ success: true, result });
+    return res.json({ success: true, result: result });
   } catch (err) {
     console.error("error searching users -- ", err.message);
     res.status(500).send(err.message);
