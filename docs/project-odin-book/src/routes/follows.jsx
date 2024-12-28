@@ -34,28 +34,32 @@ export default function Follows() {
       <div className="main">
         <h1>Hi. Follows page here.</h1>
 
-        <ul>
-          {/* 1: followingIds is defined */}
-          {user.followingIds ? (
-            <>
-              <h2>Users you are following:</h2>
+        {user ? (
+          <div>
+            {/* 1: followingIds is defined */}
+            {user.followingIds ? (
+              <>
+                <h2>Users you are following:</h2>
 
-              {user.followingIds.length > 0 ? (
-                // 2: followingIds contains more than zero users
-                <ul>
-                  {user.followingIds.map((followedUser) => {
-                    // temp: very simple list of names.
-                    <li>{followedUser.username}</li>;
-                  })}
-                </ul>
-              ) : (
-                <p>You are not following any users yet!</p>
-              )}
-            </>
-          ) : (
-            <>loading...</>
-          )}
-        </ul>
+                {user.followingIds.length > 0 ? (
+                  // 2: followingIds contains more than zero users
+                  <ul>
+                    {user.followingIds.map((followedUser) => {
+                      // temp: very simple list of names.
+                      <li>{followedUser.username}</li>;
+                    })}
+                  </ul>
+                ) : (
+                  <p>You are not following any users yet!</p>
+                )}
+              </>
+            ) : (
+              <>loading...</>
+            )}
+          </div>
+        ) : (
+          <>loading...</>
+        )}
       </div>
     </>
   );
