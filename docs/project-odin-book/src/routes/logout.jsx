@@ -1,7 +1,7 @@
 export default function Logout() {
-  return (
-    <>
-      <h1>Hi. Logout page here.</h1>
-    </>
-  );
+  setTimeout(() => {
+    localStorage.clear();
+    window.location.href = "/";
+  }, 5000);
+  return <>You have logged out successfully. Redirecting to Dashboard...</>;
 }
