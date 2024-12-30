@@ -8,6 +8,7 @@ export default function PostDetail() {
   const [user, setUser] = useState(null);
   const [data, setData] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const [comments, setComments] = useState(null);
 
   const URL = import.meta.env.VITE_API_URL;
   const params = useParams();
@@ -49,6 +50,7 @@ export default function PostDetail() {
           likes: postData.result.likes,
         });
         setAvatar(postData.result.creator.avatarURL);
+        setComments(postData.comments);
       });
 
     const token = localStorage.getItem("token");
@@ -153,8 +155,28 @@ export default function PostDetail() {
 
         <div>
           <h2>Comments:</h2>
-          <span>WIP</span>
-          {/* todo: comments form goes here. */}
+          {Array.isArray(comments) ? (
+            <div>
+              {comments.length > 0 ? (
+                <ul>
+                  {comments.map((comment) => {
+                    return (
+                      <li key={"postcomment#" + comment.id}>
+                        <b>{comment.creator.username} :</b>
+                        {comment.text}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <>This post has no comments yet!</>
+              )}
+              <br />
+              debug: comments = {JSON.stringify(comments)}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
