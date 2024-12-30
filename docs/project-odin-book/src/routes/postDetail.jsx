@@ -158,16 +158,21 @@ export default function PostDetail() {
           {Array.isArray(comments) ? (
             <div>
               {comments.length > 0 ? (
-                <ul>
-                  {comments.map((comment) => {
-                    return (
-                      <li key={"postcomment#" + comment.id}>
-                        <b>{comment.creator.username} :</b>
-                        {comment.text}
-                      </li>
-                    );
-                  })}
-                </ul>
+                comments.map((comment) => {
+                  return (
+                    <li key={comment.id} className="commentLi">
+                      <img
+                        src={
+                          comment.creator.avatarURL ||
+                          import.meta.env.VITE_DEFAULT_AVATAR_URL
+                        }
+                        alt="avatar"
+                      />
+                      <b>{comment.creator.username} :</b>
+                      <span>{comment.content}</span>
+                    </li>
+                  );
+                })
               ) : (
                 <>This post has no comments yet!</>
               )}
@@ -177,6 +182,49 @@ export default function PostDetail() {
           ) : (
             <></>
           )}
+
+          {user ? (
+            <button
+              onClick={() => {
+                // unhide comment form
+                document.getElementById("comment").hidden = false;
+              }}
+            >
+              Comment on this post ...
+            </button>
+          ) : (
+            <></>
+          )}
+
+          <form
+            id="comment"
+            hidden
+            onSubmit={(e) => {
+              e.preventDefault();
+              const content = document.getElementById("commentText").value;
+
+              fetch(`${URL}/post/${data.id}/comment`, {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: data.id,
+                  content: content,
+                }),
+              })
+                .then((res) => {
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log(result);
+                });
+            }}
+          >
+            <input type="text" name="commentText" id="commentText" />
+            <input type="submit" value="Send Comment" />
+          </form>
         </div>
       </div>
     </>

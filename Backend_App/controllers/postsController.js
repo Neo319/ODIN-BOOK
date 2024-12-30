@@ -143,6 +143,16 @@ async function post_detail(req, res) {
       where: {
         postId: postId,
       },
+      select: {
+        id: true,
+        content: true,
+        creator: {
+          select: {
+            username: true,
+            avatarURL: true,
+          },
+        },
+      },
     });
 
     res.json({ success: true, result: post, comments: comments });
