@@ -60,7 +60,7 @@ export default function MyPosts() {
         ) : (
           <>loading...</>
         )}
-        <a href="">CREATE NEW POST... (WIP)</a>
+        <a href="/createPost">CREATE NEW POST... (WIP)</a>
       </div>
     </>
   );
