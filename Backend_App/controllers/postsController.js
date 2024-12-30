@@ -110,6 +110,7 @@ async function posts_search(req, res) {
 
 async function post_detail(req, res) {
   try {
+    console.log("follow debug - ", req.params);
     const postId = req.params.id;
     if (!postId || postId === "") {
       return res

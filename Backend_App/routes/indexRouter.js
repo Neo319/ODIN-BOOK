@@ -23,7 +23,7 @@ router.get("/user", indexController.user_detail);
 // --- routes related to user manipulation ---
 router.get("/searchUsers", usersController.user_search);
 
-router.post("/follow/:userId", usersController.follow_user);
+router.post("/follow", usersController.follow_user);
 
 router.post("/updateUser", usersController.update_user);
 

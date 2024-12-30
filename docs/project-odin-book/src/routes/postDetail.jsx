@@ -58,38 +58,71 @@ export default function PostDetail() {
 
         <div>
           <h2>Info:</h2>
-          <img
-            src={avatar || import.meta.env.VITE_DEFAULT_AVATAR_URL}
-            alt="avatar"
-            className="avatar postAvatar"
-          />
-          {Detail(data, false)}
+
+          {data ? (
+            <>
+              <img
+                src={avatar || import.meta.env.VITE_DEFAULT_AVATAR_URL}
+                alt="avatar"
+                className="avatar postAvatar"
+              />
+              <br />
+              {Detail(data, false)}
+            </>
+          ) : (
+            <>Loading post... </>
+          )}
         </div>
 
         {user ? (
-          <button
-            onClick={() => {
-              console.log(data.id);
-              fetch(`${URL}/post/${data.id}/like`, {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${localStorage.token}`,
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((res) => {
-                  return res.json();
+          <>
+            {/* LIKE POST BUTTON */}
+            <button
+              onClick={() => {
+                console.log(data.id);
+                fetch(`${URL}/post/${data.id}/like`, {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${localStorage.token}`,
+                    "Content-Type": "application/json",
+                  },
                 })
-                .then((result) => {
-                  console.log(result);
-                  if (result.success) {
-                    window.location.reload();
-                  }
-                });
-            }}
-          >
-            Like this Post ... (WIP)
-          </button>
+                  .then((res) => {
+                    return res.json();
+                  })
+                  .then((result) => {
+                    console.log(result);
+                    if (result.success) {
+                      window.location.reload();
+                    }
+                  });
+              }}
+            >
+              Like this Post ...
+            </button>
+
+            {/* FOLLOW USER BUTTON */}
+
+            <button
+              onClick={() => {
+                console.log("follow ", data.creatorId);
+                fetch(`${URL}/follow`, {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${localStorage.token}`,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ userId: data.creatorId }),
+                })
+                  .then((res) => {
+                    return res.json();
+                  })
+                  .then((result) => console.log(result));
+              }}
+            >
+              Follow {data.creator}...
+            </button>
+          </>
         ) : (
           <></>
         )}
