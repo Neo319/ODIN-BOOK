@@ -27,7 +27,7 @@ export default function PostDetail() {
         console.log(result);
         if (result.success) {
           localStorage.removeItem("token");
-          localStorage.setItem(result.token);
+          localStorage.setItem("token", result.token);
         }
       });
   }
@@ -154,6 +154,7 @@ export default function PostDetail() {
         <div>
           <h2>Comments:</h2>
           <span>WIP</span>
+          {/* todo: comments form goes here. */}
         </div>
       </div>
     </>

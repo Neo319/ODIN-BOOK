@@ -41,14 +41,19 @@ export default function Follows() {
             {user.followingIds ? (
               <>
                 <h2>Users you are following:</h2>
-                <p>debug: {JSON.stringify(user)}</p>
+                <p>Note: users are currently displayed as ids only.(WIP)</p>
 
                 {user.followingIds.length > 0 ? (
                   // 2: followingIds contains more than zero users
                   <ul>
                     {user.followingIds.map((followedUser) => {
+                      console.log(followedUser);
                       // temp: very simple list of names.
-                      <li>{followedUser.username}</li>;
+                      return (
+                        <li key={`followedUser#${followedUser}`}>
+                          {followedUser}
+                        </li>
+                      );
                     })}
                   </ul>
                 ) : (
