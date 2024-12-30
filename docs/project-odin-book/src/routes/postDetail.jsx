@@ -168,8 +168,10 @@ export default function PostDetail() {
                         }
                         alt="avatar"
                       />
-                      <b>{comment.creator.username} :</b>
-                      <span>{comment.content}</span>
+                      <span>
+                        <b>{comment.creator.username} :</b>
+                        {comment.content}
+                      </span>
                     </li>
                   );
                 })
