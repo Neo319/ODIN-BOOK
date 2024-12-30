@@ -27,6 +27,8 @@ router.post("/follow", usersController.follow_user);
 
 router.post("/updateUser", usersController.update_user);
 
+router.get("/updateToken", usersController.update_token);
+
 // --- routes related to posts ---
 router.get("/postTest", postsController.test);
 

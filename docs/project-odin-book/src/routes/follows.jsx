@@ -41,6 +41,7 @@ export default function Follows() {
             {user.followingIds ? (
               <>
                 <h2>Users you are following:</h2>
+                <p>debug: {JSON.stringify(user)}</p>
 
                 {user.followingIds.length > 0 ? (
                   // 2: followingIds contains more than zero users

@@ -12,6 +12,26 @@ export default function PostDetail() {
   const URL = import.meta.env.VITE_API_URL;
   const params = useParams();
 
+  // TODO: update JWT token with new info after adding likes, follows, etc.
+  function createNewToken() {
+    fetch(`${URL}/updateToken/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.success) {
+          localStorage.removeItem("token");
+          localStorage.setItem(result.token);
+        }
+      });
+  }
+
   useEffect(() => {
     //getting post data
     fetch(`${URL}/post/${encodeURIComponent(params.id)}`)
@@ -102,10 +122,8 @@ export default function PostDetail() {
             </button>
 
             {/* FOLLOW USER BUTTON */}
-
             <button
               onClick={() => {
-                console.log("follow ", data.creatorId);
                 fetch(`${URL}/follow`, {
                   method: "POST",
                   headers: {
@@ -117,7 +135,13 @@ export default function PostDetail() {
                   .then((res) => {
                     return res.json();
                   })
-                  .then((result) => console.log(result));
+                  .then((result) => {
+                    console.log(result);
+                    if (result.success) {
+                      alert("added new followed user!");
+                      createNewToken();
+                    }
+                  });
               }}
             >
               Follow {data.creator}...

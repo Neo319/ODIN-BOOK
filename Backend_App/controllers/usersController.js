@@ -68,7 +68,6 @@ const follow_user = [
         return res.status(401).send({ message: "error during authorization." });
       } else {
         try {
-          console.log("follow debug - ", req.body);
           const userId = req.body.userId;
 
           const followedUser = await prisma.user.findUniqueOrThrow({
@@ -81,6 +80,14 @@ const follow_user = [
           }
 
           // other important checks:
+          console.log(
+            "debug - authdata-",
+            authData.user,
+            "userId -",
+            userId,
+            "check:",
+            authData.user.followingIds.includes(userId)
+          );
           if (authData.user.followingIds.includes(userId)) {
             return res.json({
               success: false,
@@ -95,7 +102,7 @@ const follow_user = [
           }
 
           // ---- updating the following user ----
-          await prisma.user.update({
+          const debugFollowing = await prisma.user.update({
             where: {
               id: authData.user.id,
             },
@@ -104,7 +111,7 @@ const follow_user = [
             },
           });
           // ---- updating followed user ----
-          await prisma.user.update({
+          const debugFollowed = await prisma.user.update({
             where: {
               id: userId,
             },
@@ -112,6 +119,13 @@ const follow_user = [
               followedByIds: { push: authData.user.id },
             },
           });
+
+          console.log(
+            "debug - finished. User ",
+            debugFollowing,
+            "followed ",
+            debugFollowed
+          );
 
           return res.json({
             success: true,
@@ -136,7 +150,6 @@ const update_user = [
         try {
           const user = authData.user;
           const updatedUserData = req.body;
-          console.log("debug: ", updatedUserData);
 
           if (
             !Object.keys(user).length ||
@@ -175,10 +188,47 @@ const update_user = [
   },
 ];
 
+const update_token = [
+  verify,
+  async function (req, res) {
+    jwt.verify(req.token, SECRET_KEY, async (err, authData) => {
+      if (err) {
+        return res.status(401).send({ message: "error during authorization." });
+      } else {
+        try {
+          const user = await prisma.user.findUniqueOrThrow({
+            where: {
+              id: authData.user.id,
+            },
+          });
+
+          const token = jwt.sign({ user: user }, SECRET_KEY, {
+            // token options
+            expiresIn: "10000s",
+          });
+          console.log("update token success. ");
+
+          return res.json({
+            message: "Login request success.",
+            token: token,
+            success: true,
+          });
+        } catch (err) {
+          console.error("error during update token", err.message);
+          return res
+            .status(400)
+            .send({ message: "error during update token" + err.message });
+        }
+      }
+    });
+  },
+];
+
 module.exports = {
   user_search,
   follow_user,
 
   update_user,
+  update_token,
   //
 };
