@@ -179,7 +179,6 @@ export default function PostDetail() {
                 <>This post has no comments yet!</>
               )}
               <br />
-              debug: comments = {JSON.stringify(comments)}
             </div>
           ) : (
             <></>
@@ -221,6 +220,9 @@ export default function PostDetail() {
                 })
                 .then((result) => {
                   console.log(result);
+                  if (result.success) {
+                    window.location.reload();
+                  }
                 });
             }}
           >
