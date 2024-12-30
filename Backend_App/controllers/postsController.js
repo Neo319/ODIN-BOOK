@@ -131,6 +131,7 @@ async function post_detail(req, res) {
         creator: {
           select: {
             username: true,
+            avatarURL: true,
           },
         },
       },

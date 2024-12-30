@@ -7,6 +7,7 @@ import Detail from "../components/Details";
 export default function PostDetail() {
   const [user, setUser] = useState(null);
   const [data, setData] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
   const URL = import.meta.env.VITE_API_URL;
   const params = useParams();
@@ -27,6 +28,7 @@ export default function PostDetail() {
           createdAt: postData.result.createdAt,
           likes: postData.result.likes,
         });
+        setAvatar(postData.result.creator.avatarURL);
       });
 
     const token = localStorage.getItem("token");
@@ -56,6 +58,11 @@ export default function PostDetail() {
 
         <div>
           <h2>Info:</h2>
+          <img
+            src={avatar || import.meta.env.VITE_DEFAULT_AVATAR_URL}
+            alt="avatar"
+            className="avatar postAvatar"
+          />
           {Detail(data, false)}
         </div>
 
