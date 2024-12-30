@@ -26,6 +26,25 @@ export default function CreatePost() {
         });
     }
   }, [URL]);
+
+  function submitNewPost() {
+    const postData = document.getElementById("post").value;
+    console.log("uploading - ", postData);
+
+    fetch(`${URL}/post`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ text: postData }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => console.log(result));
+  }
+
   return (
     <>
       {NavBar(user, null)}
@@ -34,15 +53,23 @@ export default function CreatePost() {
           <>
             <h1>create post route</h1>
             <p>Note: creating posts in this app is currently text only.</p>
-            <form action="">
+            <form
+              action=""
+              onSubmit={(e) => {
+                e.preventDefault();
+                submitNewPost();
+              }}
+            >
               <label htmlFor="post">Post content: </label>
               <br />
               <textarea name="post" id="post"></textarea>
+              <ul>
+                <li>Post creator: {user.username}</li>
+                <li>Created at {Date()}</li>
+              </ul>
+
+              <input type="submit" value="Create Post!" />
             </form>
-            <ul>
-              <li>Post creator: {user.username}</li>
-              <li>Created at {Date()}</li>
-            </ul>
           </>
         ) : (
           <>Loading...</>
