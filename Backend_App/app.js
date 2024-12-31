@@ -15,7 +15,7 @@ app.use(express.json());
 const allowedOrigins =
   process.env.NODE_ENV === "dev"
     ? "*" // development env
-    : ["placeholder"]; // production env
+    : ["https://castordisaster-odin-book.netlify.app"]; // production env
 
 app.use(
   cors({
