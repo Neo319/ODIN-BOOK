@@ -10,7 +10,7 @@ import Login from "./routes/login.jsx";
 import Logout from "./routes/logout.jsx";
 
 import MyProfile from "./routes/myProfile.jsx";
-import Follows from "./routes/Follows.jsx";
+import Follows from "./routes/follows.jsx";
 import MyPosts from "./routes/myPosts.jsx";
 import UserIndex from "./routes/userIndex.jsx";
 import SearchPosts from "./routes/searchPosts.jsx";
