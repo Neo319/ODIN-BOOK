@@ -9,7 +9,6 @@
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Introduction
@@ -53,13 +52,13 @@ This project's frontend is deployed on Netlify, and its backend is deployed on R
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/neo319/odin-book.git
+git clone https://github.com:Neo319/ODIN-BOOK.git
 ```
 
 2. Navigate to the project directory:
 
 ```sh
-cd your-repo-name
+cd odin-book
 ```
 
 3. Install dependencies for both frontend and backend:
@@ -85,7 +84,7 @@ npm start
 
 ```sh
 cd ../docs/project-odin-book
-npm start
+npm run dev
 ```
 
 3. Open your browser and navigate to `http://localhost:3000`
