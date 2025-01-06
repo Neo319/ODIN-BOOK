@@ -62,6 +62,7 @@ function App() {
             ability to like posts, add comments to them, and follow users.
           </p>
 
+          {/* User-friendly use information: */}
           <h2 className="startDesc">Getting Started</h2>
           <p>
             {user ? (

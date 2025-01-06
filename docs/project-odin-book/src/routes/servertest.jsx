@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "../components/NavBar";
 
 export default function ServerTest() {
   const [loading, setLoading] = useState(true);
@@ -48,18 +49,21 @@ export default function ServerTest() {
   runTest();
   return (
     <>
-      <h1>server test lives here</h1>
-      {loading ? <p>Loading...</p> : <p>Server Status: {status}</p>}
-      {status === "ok" ? (
-        <p>
-          You will now be redirected to the app. (temp: implement timer?)
-          {setTimeout(() => {
-            redirect();
-          }, 5000)}
-        </p>
-      ) : (
-        <></>
-      )}
+      {NavBar(null, "serverTest")}
+      <div className="main">
+        <h1>server test lives here</h1>
+        {loading ? <p>Loading...</p> : <p>Server Status: {status}</p>}
+        {status === "ok" ? (
+          <p>
+            You will now be redirected to the app. (temp: implement timer?)
+            {setTimeout(() => {
+              redirect();
+            }, 5000)}
+          </p>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 }

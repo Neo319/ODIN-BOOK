@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "../components/NavBar";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -47,51 +48,58 @@ export default function Login() {
   if (localStorage.getItem("token")) {
     return (
       <>
-        <p>Error... user already logged in.</p>
-        <a
-          href="/"
-          onClick={() => {
-            localStorage.clear();
-          }}
-        >
-          Log out
-        </a>
+        {NavBar(null, "login")}
+
+        <div className="main">
+          <p>Error... user already logged in.</p>
+          <a
+            href="/"
+            onClick={() => {
+              localStorage.clear();
+            }}
+          >
+            Log out
+          </a>
+        </div>
       </>
     );
   }
 
   return (
     <>
-      <h1>Hi. Login Page here.</h1>
+      {NavBar()}
+      <div className="main">
+        <h1>Hi. Login Page here.</h1>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          formSubmit(formData);
-        }}
-      >
-        <label htmlFor="username">Username: </label>
-        <input
-          required={true}
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <br />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            formSubmit(formData);
+          }}
+        >
+          <label htmlFor="username">Username: </label>
+          <input
+            required={true}
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label htmlFor="password">Enter Password: </label>
-        <input
-          required={true}
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <br />
+          <label htmlFor="password">Enter Password: </label>
+          <input
+            required={true}
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <br />
 
-        <input type="submit" value="Login" />
-      </form>
+          <input type="submit" value="Login" />
+        </form>
+      </div>
     </>
   );
 }

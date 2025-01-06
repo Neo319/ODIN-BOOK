@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "../components/NavBar";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -47,47 +48,50 @@ export default function SignUp() {
 
   return (
     <>
-      <h1>Hi. Signup page here.</h1>
+      {NavBar(null, "signup")}
+      <div className="main">
+        <h1>Hi. Signup page here.</h1>
 
-      <h2>Create New User here.</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          formSubmit(formData);
-        }}
-      >
-        <label htmlFor="username">Username: </label>
-        <input
-          required={true}
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <br />
+        <h2>Create New User here.</h2>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            formSubmit(formData);
+          }}
+        >
+          <label htmlFor="username">Username: </label>
+          <input
+            required={true}
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label htmlFor="password">Enter Password: </label>
-        <input
-          required={true}
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <br />
+          <label htmlFor="password">Enter Password: </label>
+          <input
+            required={true}
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label htmlFor="password2">Confirm Password: </label>
-        <input
-          required={true}
-          type="password"
-          name="password2"
-          value={formData.password2}
-          onChange={handleChange}
-        />
-        <br />
+          <label htmlFor="password2">Confirm Password: </label>
+          <input
+            required={true}
+            type="password"
+            name="password2"
+            value={formData.password2}
+            onChange={handleChange}
+          />
+          <br />
 
-        <input type="submit" value="Create User" />
-      </form>
+          <input type="submit" value="Create User" />
+        </form>
+      </div>
     </>
   );
 }
