@@ -62,6 +62,20 @@ function App() {
             ability to like posts, add comments to them, and follow users.
           </p>
 
+          <ul>
+            <li>Faker.js used to seed database</li>
+            <li>
+              <a
+                href="https://railway.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Railway{" "}
+              </a>
+              used for backend deployment
+            </li>
+          </ul>
+
           {/* User-friendly use information: */}
           <h2 className="startDesc">Getting Started</h2>
           <p>
@@ -80,20 +94,6 @@ function App() {
               </p>
             )}
           </p>
-
-          <ul>
-            <li>Faker.js used to seed database</li>
-            <li>
-              <a
-                href="https://railway.app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Railway{" "}
-              </a>
-              used for backend deployment
-            </li>
-          </ul>
         </div>
 
         <div className="dashboardPosts">
