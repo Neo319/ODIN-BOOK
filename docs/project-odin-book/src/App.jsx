@@ -62,6 +62,24 @@ function App() {
             ability to like posts, add comments to them, and follow users.
           </p>
 
+          <h2 className="startDesc">Getting Started</h2>
+          <p>
+            {user ? (
+              <p>
+                You are now logged in. Try customizing your profile, creating a
+                post, or adding likes and comments to other posts!
+              </p>
+            ) : (
+              <p>
+                To begin, <a href="/signup">Sign Up</a> to create a new profile.
+                You will then be able to create new posts, and add likes and
+                comments to posts. If you already have a profile, you can also{" "}
+                <a href="/login">Log In.</a> Alternatively, users who are not
+                logged in can browse users and profiles at their lesuire. 🙂
+              </p>
+            )}
+          </p>
+
           <ul>
             <li>Faker.js used to seed database</li>
             <li>

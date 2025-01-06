@@ -16,6 +16,10 @@
 
 This is a personal portfolio project built as a monorepo. It is a solution to [the 'Odin Book' project](https://www.theodinproject.com/lessons/node-path-nodejs-odin-book) from [The Odin Project curriculum.](https://www.theodinproject.com) It includes a React-based frontend and a Node.js-based backend. The project showcases my skills and abilities for full-stack development.
 
+This project's frontend is deployed on Netlify, and its backend is deployed on Railway.
+
+[**See live preview here.**](https://castordisaster-odin-book.netlify.app)
+
 ## Features
 
 - Responsive design
@@ -33,6 +37,7 @@ This is a personal portfolio project built as a monorepo. It is a solution to [t
 - React Router
 - CSS
 - Fetch API
+- Netlify
 
 ### Backend
 
@@ -41,6 +46,7 @@ This is a personal portfolio project built as a monorepo. It is a solution to [t
 - PostgreSQL
 - JWT
 - Prisma ORM
+- Railway
 
 ## Installation
 
